@@ -110,44 +110,45 @@ function animate() {
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
 
+    //Avoid using elseif because we need to use multiple keys at once
     if (movement.keyDPressed == true && lastKey.toLowerCase() == "d") {
         player.velocity.x = speedX;
     }
 
-    else if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
+    if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
         player.velocity.x = -speedX;
     }
 
-    else if (movement.keyWPressed == true && lastKey.toLowerCase() == "w") {
+    if (movement.keyWPressed == true) {
+        console.log("got this?")
         player.velocity.y = -10;
     }
 
     player.update();
     enemy1.update();
 
-    player.velocity = {x: 0, y: y};
+    player.velocity = {x: 0, y: player.velocity.y};
 }
 
 document.addEventListener("keydown", (event) => {
     console.log(event.key);
     switch (event.key) {
         case "a":
-        case "ArrowLeft":
+        // case "ArrowLeft":
             movement.keyAPressed = true;
             lastKey = "a";
             break;
         case "d":
-        case "ArrowRight":
+        // case "ArrowRight":
             movement.keyDPressed = true;
             lastKey = "d";
             break;
         case "w":
-        case "ArrowUp":
+        // case "ArrowUp":
             movement.keyWPressed = true;
-            lastKey = "w";
             break;
         case "s":
-        case "ArrowDown":
+        // case "ArrowDown":
             movement.keySPressed = true;
             lastKey = "s";
             break;
