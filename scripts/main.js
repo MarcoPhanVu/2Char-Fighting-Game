@@ -40,11 +40,8 @@ function keepInside(obj) {
 
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
-        gravity = 0;
     }
-    else {
-        gravity = 1.2;
-    }
+
 
     if (obj.pos.x + 40 >= display.width) { //Right
         obj.pos.x = display.width - 40;
@@ -63,14 +60,11 @@ function bounce(gameState) {
 
 }
 
-
-
 class Sprite {
     constructor(position, appearance, velocity={x: 0, y: 0}) {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
-        // this.velocity = {x: 0, y: 0};
     }
 
     draw() {
@@ -85,13 +79,21 @@ class Sprite {
 
         keepInside(this);
 
-        // console.log(this.pos.x);
-        // console.log(this.pos.y);
-
         this.draw();
     }
 }
 
+const movement = {
+    keyDPressed: false,
+    keyAPressed: false,
+    keyWPressed: false,
+    keySPressed: false
+
+}
+
+let lastKey; //to be more accurate 
+let speedX = 2.4;
+let speedY = 2.4;
 
 const player = new Sprite({
     x: 50,
@@ -103,54 +105,79 @@ const enemy1 = new Sprite({
     y: 00
 }, ParadisePink, {x: 0, y: 2.4});
 
-interval500 = setInterval(animate, 20)
-
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
 
+    if (movement.keyDPressed == true && lastKey.toLowerCase() == "d") {
+        player.velocity.x = speedX;
+    }
+
+    else if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
+        player.velocity.x = -speedX;
+    }
+
+    else if (movement.keyWPressed == true && lastKey.toLowerCase() == "w") {
+        player.velocity.y = -10;
+    }
+
     player.update();
     enemy1.update();
+
+    player.velocity = {x: 0, y: y};
 }
 
 document.addEventListener("keydown", (event) => {
-    // console.log(event.key);
+    console.log(event.key);
     switch (event.key) {
-        case 'a':
-            player.velocity.x = -2;
+        case "a":
+        case "ArrowLeft":
+            movement.keyAPressed = true;
+            lastKey = "a";
             break;
-        case 'd':
-            player.velocity.x = 2;
+        case "d":
+        case "ArrowRight":
+            movement.keyDPressed = true;
+            lastKey = "d";
             break;
-        case 's':
-            player.velocity.y = 2;
-            console.log("player ducked");
+        case "w":
+        case "ArrowUp":
+            movement.keyWPressed = true;
+            lastKey = "w";
             break;
-        case 'w':
-            player.velocity.y = -2;
-            console.log("player jumped");
+        case "s":
+        case "ArrowDown":
+            movement.keySPressed = true;
+            lastKey = "s";
             break;
-
     }
 });
 
 document.addEventListener("keyup", (event) => {
-    // console.log();
     switch (event.key) {
-        case 'a':
-            player.velocity.x = 0;
+        case "a":
+        case "ArrowLeft":
+            movement.keyAPressed = false;
             break;
-        case 'd':
-            player.velocity.x = 0;
+        case "d":
+        case "ArrowRight":
+            movement.keyDPressed = false;
             break;
-        case 's':
-            player.velocity.y = 0;
-            console.log("player ducked");
+        case "w":
+        case "ArrowUp":
+            movement.keyWPressed = false;
             break;
-        case 'w':
-            player.velocity.y = 0;
-            console.log("player jumped");
+        case "s":
+        case "ArrowDown":
+            movement.keySPressed = false;
             break;
     }
+    console.log(movement)
 });
+
+
+
+
+
+interval500 = setInterval(animate, 20)
