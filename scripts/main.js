@@ -17,7 +17,6 @@ FeldGrau = "#445552";
 DarkSlateGray = "#294D4A";
 DimSkyBlue = "#83B5D1";
 Rythm = "#726E97";
-ParadisePink = "#EE4266";
 SunGlow = "#FFD23F";
 CaribeanGreen = "#3BCEAC";
 GoGreen = "#0EAD69";
@@ -25,6 +24,13 @@ DavysGrey = "#595959";
 Xanadu = "#808F85";
 SunRay = "#EDB458"
 Celadon ="#BAD4AA";
+
+//Pink
+ParadisePink = "#EE4266";
+FieryRose = "#FB6376";
+Melon = "#FCB1A6";
+UnbleachedSilk = "#FFDCCC";
+FloralWhite = "#FFF9EC"
 
 // COLORS END
 
@@ -37,6 +43,23 @@ function keepInside(obj) {
     // if (obj.pos.y <= 0) { //Top
     //     obj.pos.y = 0;
     // }
+
+    if (obj.pos.y + 80 >= display.height) { //Bottom
+        obj.pos.y = display.height - 80;
+    }
+
+
+    if (obj.pos.x + 40 >= display.width) { //Right
+        obj.pos.x = display.width - 40;
+    }
+    
+    if (obj.pos.x <= 0) { //left
+        obj.pos.x = 0;
+    }
+}
+
+function keepApart(obj) {
+
 
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
@@ -95,19 +118,24 @@ const movement = {
 
 }
 
-let lastKey; //to be more accurate 
+// let lastKey; //to be more accurate 
 let speedX = 5;
 let speedY = 5;
 
 const player = new Sprite({
-    x: 50,
+    x: 300,
     y: 00
 }, Celadon, {x: 0, y: speedY});
 
 const enemy1 = new Sprite({
-    x: 500,
+    x: 560,
     y: 00
 }, ParadisePink, {x: 0, y: speedY});
+
+const enemy2 = new Sprite({
+    x: 120,
+    y: 00
+}, FieryRose, {x: 0, y: speedY});
 
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
@@ -117,11 +145,13 @@ function animate() {
 
     //Avoid using elseif because we need to use multiple keys at once
     //Player Section
-        if (movement.keyDPressed == true && lastKey.toLowerCase() == "d") {
+        // if (movement.keyDPressed == true && lastKey.toLowerCase() == "d") {
+        if (movement.keyDPressed == true) {
             player.velocity.x = speedX;
         }
 
-        if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
+        // if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
+        if (movement.keyAPressed == true) {
             player.velocity.x = -speedX;
         }
 
@@ -130,24 +160,31 @@ function animate() {
         }
 
     // Enemy Section
-        if (movement.keyRAPressed == true && lastKey.toLowerCase() == "arrowright") {
+        // if (movement.keyRAPressed == true && lastKey.toLowerCase() == "arrowright") {
+        if (movement.keyRAPressed == true) {
             enemy1.velocity.x = speedX;
+            enemy2.velocity.x = speedX;
         }
 
-        if (movement.keyLAPressed == true && lastKey.toLowerCase() == "arrowleft") {
+        // if (movement.keyLAPressed == true && lastKey.toLowerCase() == "arrowleft") {
+        if (movement.keyLAPressed == true) {
             enemy1.velocity.x = -speedX;
+            enemy2.velocity.x = -speedX;
         }
 
         if (movement.keyUAPressed == true) {
             enemy1.velocity.y = -speedY * 3.6;
+            enemy2.velocity.y = -speedY * 3.6;
         }
 
 
     player.update();
     enemy1.update();
+    enemy2.update();
 
     player.velocity = {x: 0, y: player.velocity.y};
     enemy1.velocity = {x: 0, y: enemy1.velocity.y};
+    enemy2.velocity = {x: 0, y: enemy2.velocity.y};
 }
 
 document.addEventListener("keydown", (event) => {
@@ -157,36 +194,36 @@ document.addEventListener("keydown", (event) => {
         // Player
         case "a":
             movement.keyAPressed = true;
-            lastKey = "a";
+            // lastKey = "a";
             break;
         case "d":
             movement.keyDPressed = true;
-            lastKey = "d";
+            // lastKey = "d";
             break;
         case "w":
             movement.keyWPressed = true;
             break;
         case "s":
             movement.keySPressed = true;
-            lastKey = "s";
+            // lastKey = "s";
             break;
 
 
         // Enemy
         case "ArrowLeft":
             movement.keyLAPressed = true;
-            lastKey = "ArrowLeft";
+            // lastKey = "ArrowLeft";
             break;
         case "ArrowRight":
             movement.keyRAPressed = true;
-            lastKey = "ArrowRight";
+            // lastKey = "ArrowRight";
             break;
         case "ArrowUp":
             movement.keyUAPressed = true;
             break;
         case "ArrowDown":
             movement.keyDAPressed = true;
-            lastKey = "ArrowDown";
+            // lastKey = "ArrowDown";
             break;
     }
 });
