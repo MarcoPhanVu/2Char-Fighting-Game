@@ -34,9 +34,9 @@ con.fillStyle = FeldGrau;
 con.fillRect(0, 0, display.width, display.height);
 
 function keepInside(obj) {
-    if (obj.pos.y <= 0) { //Top
-        obj.pos.y = display.height;
-    }
+    // if (obj.pos.y <= 0) { //Top
+    //     obj.pos.y = 0;
+    // }
 
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
@@ -61,7 +61,7 @@ function bounce(gameState) {
 }
 
 class Sprite {
-    constructor(position, appearance, velocity={x: 0, y: 0}) {
+    constructor(position, appearance, velocity = {x: 0, y: 0}) {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
@@ -87,91 +87,140 @@ const movement = {
     keyDPressed: false,
     keyAPressed: false,
     keyWPressed: false,
-    keySPressed: false
+    keySPressed: false,
+    keyRAPressed: false,
+    keyLAPressed: false,
+    keyUAPressed: false,
+    keyDAPressed: false
 
 }
 
 let lastKey; //to be more accurate 
-let speedX = 2.4;
-let speedY = 2.4;
+let speedX = 5;
+let speedY = 5;
 
 const player = new Sprite({
     x: 50,
     y: 00
-}, Celadon, {x: 0, y: 2.4});
+}, Celadon, {x: 0, y: speedY});
 
 const enemy1 = new Sprite({
     x: 500,
     y: 00
-}, ParadisePink, {x: 0, y: 2.4});
+}, ParadisePink, {x: 0, y: speedY});
 
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
 
+
     //Avoid using elseif because we need to use multiple keys at once
-    if (movement.keyDPressed == true && lastKey.toLowerCase() == "d") {
-        player.velocity.x = speedX;
-    }
+    //Player Section
+        if (movement.keyDPressed == true && lastKey.toLowerCase() == "d") {
+            player.velocity.x = speedX;
+        }
 
-    if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
-        player.velocity.x = -speedX;
-    }
+        if (movement.keyAPressed == true && lastKey.toLowerCase() == "a") {
+            player.velocity.x = -speedX;
+        }
 
-    if (movement.keyWPressed == true) {
-        console.log("got this?")
-        player.velocity.y = -10;
-    }
+        if (movement.keyWPressed == true) {
+            player.velocity.y = -speedY * 3.6;
+        }
+
+    // Enemy Section
+        if (movement.keyRAPressed == true && lastKey.toLowerCase() == "arrowright") {
+            enemy1.velocity.x = speedX;
+        }
+
+        if (movement.keyLAPressed == true && lastKey.toLowerCase() == "arrowleft") {
+            enemy1.velocity.x = -speedX;
+        }
+
+        if (movement.keyUAPressed == true) {
+            enemy1.velocity.y = -speedY * 3.6;
+        }
+
 
     player.update();
     enemy1.update();
 
     player.velocity = {x: 0, y: player.velocity.y};
+    enemy1.velocity = {x: 0, y: enemy1.velocity.y};
 }
 
 document.addEventListener("keydown", (event) => {
     console.log(event.key);
     switch (event.key) {
+
+        // Player
         case "a":
-        // case "ArrowLeft":
             movement.keyAPressed = true;
             lastKey = "a";
             break;
         case "d":
-        // case "ArrowRight":
             movement.keyDPressed = true;
             lastKey = "d";
             break;
         case "w":
-        // case "ArrowUp":
             movement.keyWPressed = true;
             break;
         case "s":
-        // case "ArrowDown":
             movement.keySPressed = true;
             lastKey = "s";
+            break;
+
+
+        // Enemy
+        case "ArrowLeft":
+            movement.keyLAPressed = true;
+            lastKey = "ArrowLeft";
+            break;
+        case "ArrowRight":
+            movement.keyRAPressed = true;
+            lastKey = "ArrowRight";
+            break;
+        case "ArrowUp":
+            movement.keyUAPressed = true;
+            break;
+        case "ArrowDown":
+            movement.keyDAPressed = true;
+            lastKey = "ArrowDown";
             break;
     }
 });
 
 document.addEventListener("keyup", (event) => {
     switch (event.key) {
+
+        // Player
         case "a":
-        case "ArrowLeft":
             movement.keyAPressed = false;
             break;
         case "d":
-        case "ArrowRight":
             movement.keyDPressed = false;
             break;
         case "w":
-        case "ArrowUp":
             movement.keyWPressed = false;
             break;
         case "s":
-        case "ArrowDown":
             movement.keySPressed = false;
+            break;
+
+
+        // Enemy
+        case "ArrowLeft":
+            movement.keyLAPressed = false;
+            break;
+        case "ArrowRight":
+            movement.keyRAPressed = false;
+            break;
+        case "ArrowUp":
+            movement.keyUAPressed = false;
+            break;
+        case "ArrowDown":
+            movement.keyDAPressed = false;
             break;
     }
     console.log(movement)
