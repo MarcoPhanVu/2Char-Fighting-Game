@@ -34,7 +34,7 @@ FloralWhite = "#FFF9EC"
 
 // COLORS END
 
-let gravity = 1.2;
+let gravity = 1.4;
 
 con.fillStyle = FeldGrau;
 con.fillRect(0, 0, display.width, display.height);
@@ -46,6 +46,9 @@ function keepInside(obj) {
 
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
+        obj.inAir = false;
+        obj.jumped = 0;
+        // console.log(`${obj} jumped: ${obj.jumped}`)
     }
 
 
@@ -88,6 +91,8 @@ class Sprite {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
+        this.jumped = 0;
+        this.inAir = true;
     }
 
     draw() {
@@ -96,15 +101,36 @@ class Sprite {
     }
 
     update() {
-        this.velocity.y += gravity;
+        if (this.inAir) {
+            this.velocity.y += gravity;
+        }
+
         this.pos.x += this.velocity.x;
         this.pos.y += this.velocity.y;
-
         keepInside(this);
 
         this.draw();
     }
+
+    jump() {
+        console.log(player.jumped)
+        if (this.jumped == 0) { // first Jump
+            this.velocity.y -= 20;
+            ++this.jumped;
+        }
+        else if (this.jumped == 1) { // Jumped Once
+            this.velocity.y -= 16;
+            ++this.jumped;
+        }
+        
+        this.inAir = true
+    }
+
+    toss() {
+        this.velocity = 10;
+    }
 }
+
 
 const movement = {
     keyDPressed: false,
@@ -120,21 +146,21 @@ const movement = {
 
 // let lastKey; //to be more accurate 
 let speedX = 5;
-let speedY = 5;
+let speedY = -12;
 
 const player = new Sprite({
     x: 300,
-    y: 00
+    y: 24
 }, Celadon, {x: 0, y: speedY});
 
 const enemy1 = new Sprite({
     x: 560,
-    y: 00
+    y: 24
 }, ParadisePink, {x: 0, y: speedY});
 
 const enemy2 = new Sprite({
     x: 120,
-    y: 00
+    y: 24
 }, FieryRose, {x: 0, y: speedY});
 
 function animate() {
@@ -156,7 +182,7 @@ function animate() {
         }
 
         if (movement.keyWPressed == true) {
-            player.velocity.y = -speedY * 3.6;
+            player.jump();
         }
 
     // Enemy Section
@@ -173,8 +199,8 @@ function animate() {
         }
 
         if (movement.keyUAPressed == true) {
-            enemy1.velocity.y = -speedY * 3.6;
-            enemy2.velocity.y = -speedY * 3.6;
+            enemy1.jump();
+            enemy2.jump();
         }
 
 
@@ -260,7 +286,6 @@ document.addEventListener("keyup", (event) => {
             movement.keyDAPressed = false;
             break;
     }
-    console.log(movement)
 });
 
 
