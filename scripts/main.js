@@ -59,29 +59,8 @@ function keepInside(obj) {
     }
 }
 
-function keepApart(obj) {
-
-
-    if (obj.pos.y + 80 >= display.height) { //Bottom
-        obj.pos.y = display.height - 80;
-    }
-
-
-    if (obj.pos.x + 40 >= display.width) { //Right
-        obj.pos.x = display.width - 40;
-    }
-    
-    if (obj.pos.x <= 0) { //left
-        obj.pos.x = 0;
-    }
-}
-
 function checkCollision(gameState) {
     
-}
-
-function bounce(gameState) {
-
 }
 
 class Sprite {
