@@ -5,7 +5,7 @@ const con = display.getContext("2d");
 let screenRatio = 0.8;
 
 display.width = 800 * screenRatio;
-display.height = 600 * screenRatio;
+display.height = 400 * screenRatio;
 
 
 // COLORS START
@@ -46,6 +46,7 @@ function keepInside(obj) {
 
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
+        obj.inAir = false;
     }
 
 
@@ -88,6 +89,7 @@ class Sprite {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
+        this.inAir = true;
     }
 
     draw() {
@@ -104,6 +106,11 @@ class Sprite {
 
         this.draw();
     }
+
+    jump() {
+        this.velocity.y = -speedY;
+        this.inAir = true;
+    }
 }
 
 const movement = {
@@ -119,23 +126,23 @@ const movement = {
 }
 
 // let lastKey; //to be more accurate 
-let speedX = 5;
-let speedY = 5;
+let speedX = 8;
+let speedY = 20;
 
 const player = new Sprite({
     x: 300,
     y: 00
-}, Celadon, {x: 0, y: speedY});
+}, Celadon, {x: 0, y: -speedY});
 
 const enemy1 = new Sprite({
     x: 560,
     y: 00
-}, ParadisePink, {x: 0, y: speedY});
+}, ParadisePink, {x: 0, y: -speedY});
 
 const enemy2 = new Sprite({
     x: 120,
     y: 00
-}, FieryRose, {x: 0, y: speedY});
+}, FieryRose, {x: 0, y: -speedY});
 
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
@@ -155,8 +162,8 @@ function animate() {
             player.velocity.x = -speedX;
         }
 
-        if (movement.keyWPressed == true) {
-            player.velocity.y = -speedY * 3.6;
+        if (movement.keyWPressed == true && player.inAir == false) {
+            player.jump();
         }
 
     // Enemy Section
@@ -172,9 +179,9 @@ function animate() {
             enemy2.velocity.x = -speedX;
         }
 
-        if (movement.keyUAPressed == true) {
-            enemy1.velocity.y = -speedY * 3.6;
-            enemy2.velocity.y = -speedY * 3.6;
+        if (movement.keyUAPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
+            enemy1.jump();
+            enemy2.jump();
         }
 
 
@@ -188,7 +195,6 @@ function animate() {
 }
 
 document.addEventListener("keydown", (event) => {
-    console.log(event.key);
     switch (event.key) {
 
         // Player
@@ -260,11 +266,10 @@ document.addEventListener("keyup", (event) => {
             movement.keyDAPressed = false;
             break;
     }
-    console.log(movement)
 });
 
 
 
 
 
-interval500 = setInterval(animate, 20)
+interval500 = setInterval(animate, 20);
