@@ -91,13 +91,36 @@ class Sprite {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
+a
+// SHIT, I WAS MAKING CHANGES ON AN INCORRECT BRANCHHHHHHH!
+// I'll leave this for my future self to fix
+
+// Me - future self: fuck you, past me, still unable to fix this. You should've went to sleep earlier instead of making these changes on the WRONG BRANCH!!!
+
+        this.spriteWidth = 40;
+        this.spriteHeight = 80;
+
+        this.weapon = {
+            posX: this.pos.x + this.spriteWidth,
+            posY: this.pos.y + this.spriteHeight,
+            width: 60,
+            height: 20
+        }
+        
+        // States
         this.jumped = 0;
         this.inAir = true;
     }
 
+
     draw() {
+        // Sprite
         con.fillStyle = this.look;
-        con.fillRect(this.pos.x, this.pos.y, 40, 80);
+        con.fillRect(this.pos.x, this.pos.y, this.spriteWidth, this.spriteHeight);
+
+        //
+        con.fillStyle = Celadon;
+        con.fillRect(this.weapon.posX, this.weapon.posY, this.weapon.width, this.weapon.height);
     }
 
     update() {
@@ -107,6 +130,11 @@ class Sprite {
 
         this.pos.x += this.velocity.x;
         this.pos.y += this.velocity.y;
+
+        this.weapon.posX = this.pos.x + this.spriteWidth;
+        this.weapon.posY = this.pos.y;
+
+
         keepInside(this);
 
         this.draw();
@@ -123,10 +151,10 @@ class Sprite {
             ++this.jumped;
         }
         
-        this.inAir = true
+        this.inAir = true;
     }
 
-    toss() {
+    tossed() {
         this.velocity = 10;
     }
 }
