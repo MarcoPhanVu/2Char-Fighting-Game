@@ -47,6 +47,7 @@ function keepInside(obj) {
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
         obj.inAir = false;
+        obj.velocity.y = 0;
     }
 
 
@@ -109,7 +110,9 @@ class Sprite {
 
         this.weapon.posX = this.pos.x + this.spriteWidth;
         this.weapon.posY = this.pos.y;
-
+        // console.log(`Player posY = ${player.pos.y}`);
+        // console.log(`${this.name}: ${this.pos.y}`);
+        // console.log(`And loc: ${this.weapon.posY}:`)
 
         keepInside(this);
 
