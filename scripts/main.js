@@ -5,7 +5,7 @@ const con = display.getContext("2d");
 let screenRatio = 0.8;
 
 display.width = 800 * screenRatio;
-display.height = 600 * screenRatio;
+display.height = 400 * screenRatio;
 
 
 // COLORS START
@@ -34,7 +34,7 @@ FloralWhite = "#FFF9EC"
 
 // COLORS END
 
-let gravity = 1.4;
+let gravity = 1.2;
 
 con.fillStyle = FeldGrau;
 con.fillRect(0, 0, display.width, display.height);
@@ -47,25 +47,6 @@ function keepInside(obj) {
     if (obj.pos.y + 80 >= display.height) { //Bottom
         obj.pos.y = display.height - 80;
         obj.inAir = false;
-        obj.jumped = 0;
-        // console.log(`${obj} jumped: ${obj.jumped}`)
-    }
-
-
-    if (obj.pos.x + 40 >= display.width) { //Right
-        obj.pos.x = display.width - 40;
-    }
-    
-    if (obj.pos.x <= 0) { //left
-        obj.pos.x = 0;
-    }
-}
-
-function keepApart(obj) {
-
-
-    if (obj.pos.y + 80 >= display.height) { //Bottom
-        obj.pos.y = display.height - 80;
     }
 
 
@@ -82,16 +63,11 @@ function checkCollision(gameState) {
     
 }
 
-function bounce(gameState) {
-
-}
-
 class Sprite {
     constructor(position, appearance, velocity = {x: 0, y: 0}) {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
-a
 // SHIT, I WAS MAKING CHANGES ON AN INCORRECT BRANCHHHHHHH!
 // I'll leave this for my future self to fix
 
@@ -108,7 +84,6 @@ a
         }
         
         // States
-        this.jumped = 0;
         this.inAir = true;
     }
 
@@ -118,10 +93,11 @@ a
         con.fillStyle = this.look;
         con.fillRect(this.pos.x, this.pos.y, this.spriteWidth, this.spriteHeight);
 
-        //
+        // Weapon
         con.fillStyle = Celadon;
         con.fillRect(this.weapon.posX, this.weapon.posY, this.weapon.width, this.weapon.height);
     }
+
 
     update() {
         if (this.inAir) {
@@ -140,22 +116,11 @@ a
         this.draw();
     }
 
-    jump() {
-        console.log(player.jumped)
-        if (this.jumped == 0) { // first Jump
-            this.velocity.y -= 20;
-            ++this.jumped;
-        }
-        else if (this.jumped == 1) { // Jumped Once
-            this.velocity.y -= 16;
-            ++this.jumped;
-        }
-        
-        this.inAir = true;
-    }
 
-    tossed() {
-        this.velocity = 10;
+    jump() {
+        this.velocity.y = -speedY;
+        console.log(this.velocity.y);
+        this.inAir = true;
     }
 }
 
@@ -169,27 +134,26 @@ const movement = {
     keyLAPressed: false,
     keyUAPressed: false,
     keyDAPressed: false
-
 }
 
 // let lastKey; //to be more accurate 
-let speedX = 5;
-let speedY = -12;
+let speedX = 8;
+let speedY = 20;
 
 const player = new Sprite({
     x: 300,
     y: 24
-}, Celadon, {x: 0, y: speedY});
+}, Celadon, {x: 0, y: -speedY});
 
 const enemy1 = new Sprite({
     x: 560,
     y: 24
-}, ParadisePink, {x: 0, y: speedY});
+}, ParadisePink, {x: 0, y: -speedY});
 
 const enemy2 = new Sprite({
     x: 120,
     y: 24
-}, FieryRose, {x: 0, y: speedY});
+}, FieryRose, {x: 0, y: -speedY});
 
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
@@ -209,7 +173,7 @@ function animate() {
             player.velocity.x = -speedX;
         }
 
-        if (movement.keyWPressed == true) {
+        if (movement.keyWPressed == true && player.inAir == false) {
             player.jump();
         }
 
@@ -226,7 +190,8 @@ function animate() {
             enemy2.velocity.x = -speedX;
         }
 
-        if (movement.keyUAPressed == true) {
+        if (movement.keyUAPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
+            console.log(movement.keyUAPressed)
             enemy1.jump();
             enemy2.jump();
         }
@@ -242,7 +207,6 @@ function animate() {
 }
 
 document.addEventListener("keydown", (event) => {
-    console.log(event.key);
     switch (event.key) {
 
         // Player
@@ -274,10 +238,10 @@ document.addEventListener("keydown", (event) => {
             break;
         case "ArrowUp":
             movement.keyUAPressed = true;
+            console.log(movement)
             break;
         case "ArrowDown":
             movement.keyDAPressed = true;
-            // lastKey = "ArrowDown";
             break;
     }
 });
