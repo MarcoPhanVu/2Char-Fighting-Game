@@ -86,38 +86,43 @@ function animate() {
     enemy2.velocity = {x: 0, y: enemy2.velocity.y};
 }
 
+
+
 document.addEventListener("keydown", (event) => {
     console.log(event.key);
-    switch (event.key) {
-        // Player
-        case "a":
-            movement.keyAPressed = true;
-            break;
-        case "d":
-            movement.keyDPressed = true;
-            break;
-        case "w":
-            movement.keyWPressed = true;
-            break;
-        case "s":
-            movement.keySPressed = true;
-            break;
+
+    let keyStrokes = {}
+
+    // switch (event.key) {
+    //     // Player
+    //     case "a":
+    //         movement.keyAPressed = true;
+    //         break;
+    //     case "d":
+    //         movement.keyDPressed = true;
+    //         break;
+    //     case "w":
+    //         movement.keyWPressed = true;
+    //         break;
+    //     case "s":
+    //         movement.keySPressed = true;
+    //         break;
 
 
-        // Enemy
-        case "ArrowLeft":
-            movement.keyLAPressed = true;
-            break;
-        case "ArrowRight":
-            movement.keyRAPressed = true;
-            break;
-        case "ArrowUp":
-            movement.keyUAPressed = true;
-            break;
-        case "ArrowDown":
-            movement.keyDAPressed = true;
-            break;
-    }
+    //     // Enemy
+    //     case "ArrowLeft":
+    //         movement.keyLAPressed = true;
+    //         break;
+    //     case "ArrowRight":
+    //         movement.keyRAPressed = true;
+    //         break;
+    //     case "ArrowUp":
+    //         movement.keyUAPressed = true;
+    //         break;
+    //     case "ArrowDown":
+    //         movement.keyDAPressed = true;
+    //         break;
+//     }
 });
 
 document.addEventListener("keyup", (event) => {
@@ -153,3 +158,25 @@ document.addEventListener("keyup", (event) => {
             break;
     }
 });
+
+
+
+function dealCase(obj, _case, func) { // Cannot type "case" and "function" because  they're built-ins.
+    if (obj[_case] == undefined) {
+        obj[_case] = func;
+        // console.log("Obj " + _case + " = " + obj[_case]);
+    }
+
+    return;
+}
+
+let sample = {
+    test1: "1st",
+    test2: "2nd",
+    test3: "3rd"
+}
+
+console.log(sample);
+console.log(sample["test2"]);
+sample["test4"] = 42
+console.log(sample["test4"]);
