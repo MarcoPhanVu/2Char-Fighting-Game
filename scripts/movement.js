@@ -56,6 +56,7 @@ function animate() {
 
         if (movement.keyWPressed == true && player.inAir == false) {
             player.jump();
+            movement.keyWPressed = false;
         }
 
     // Enemy Section
@@ -72,6 +73,7 @@ function animate() {
         if (movement.keyUAPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
             enemy1.jump();
             enemy2.jump();
+            movement.keyUAPressed = false;
         }
 
 
@@ -85,8 +87,8 @@ function animate() {
 }
 
 document.addEventListener("keydown", (event) => {
+    console.log(event.key);
     switch (event.key) {
-
         // Player
         case "a":
             movement.keyAPressed = true;
