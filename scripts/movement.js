@@ -1,14 +1,10 @@
 let gravity = 1.2;
 
 function keepInside(obj) {
-    // if (obj.pos.y <= 0) { //Top
-    //     obj.pos.y = 0;
-    // }
-
     if (obj.pos.y + 80 >= display.height) { // Ground
         obj.pos.y = display.height - 80;
         obj.inAir = false;
-        obj.velocity.y = 0; // to prevent weird Y offsets
+        obj.velocity.y = 0; // to prevent weird weapon's Y offsets
     }
 
 
@@ -25,7 +21,7 @@ function checkCollision(gameState) {
     
 }
 
-const movementState = {} // Empty Object but will be filled and modified with dynamicCaseIncrement function
+const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
 
 let speedX = 8;
@@ -36,7 +32,7 @@ function animate() {
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
 
-    //Avoid using elseif because we need to use multiple keys at once
+    //Avoid using elseif because we need to be able to use multiple keys at once
     //Player Section
         if (movementState.d_keyPressed == true) {
             player.velocity.x = speedX;
@@ -81,10 +77,7 @@ function animate() {
 let keyStrokes = {}
 
 document.addEventListener("keydown", (event) => {
-    console.log(event.key);
-
-    dynamicCaseIncrement(keyStrokes, event.key.toLowerCase(), keyPressed(event.key));
-
+    dynamicCaseIncrement(keyStrokes, event.key.toLowerCase(), keyPressed(event.key)); //adding new cases whenever there's a new key pressed
 });
 
 document.addEventListener("keyup", (event) => {
@@ -106,11 +99,8 @@ function keyReleased(key) {
 }
 
 
-
+// THIS FUNCTION WILL ONLY ADD UNDEFINED CASES, IF THEY'VE EXISTED THEN NOTHING WILL HAPPEN
 function dynamicCaseIncrement(obj, _case, func = null) { // Cannot type "case" and "function" because  they're built-ins.
-
-    // THIS FUNCTION ONLY ADD UNDEFINED CASES, IF THEY'VE EXISTED THEN NOTHING WILL HAPPEN
-
     if (obj[_case] == undefined) {
         obj[_case] = func;
         // console.log("Obj " + _case + " = " + obj[_case]);
