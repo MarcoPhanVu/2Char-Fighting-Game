@@ -1,14 +1,10 @@
 let gravity = 1.2;
 
 function keepInside(obj) {
-    // if (obj.pos.y <= 0) { //Top
-    //     obj.pos.y = 0;
-    // }
-
     if (obj.pos.y + 80 >= display.height) { // Ground
         obj.pos.y = display.height - 80;
         obj.inAir = false;
-        obj.velocity.y = 0; // to prevent weird Y offsets
+        obj.velocity.y = 0; // to prevent weird weapon's Y offsets
     }
 
 
@@ -25,16 +21,8 @@ function checkCollision(gameState) {
     
 }
 
-const movement = {
-    keyDPressed: false,
-    keyAPressed: false,
-    keyWPressed: false,
-    keySPressed: false,
-    keyRAPressed: false,
-    keyLAPressed: false,
-    keyUAPressed: false,
-    keyDAPressed: false
-}
+const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
+
 
 let speedX = 8;
 let speedY = 20;
@@ -44,36 +32,36 @@ function animate() {
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
 
-    //Avoid using elseif because we need to use multiple keys at once
+    //Avoid using elseif because we need to be able to use multiple keys at once
     //Player Section
-        if (movement.keyDPressed == true) {
+        if (movementState.d_keyPressed == true) {
             player.velocity.x = speedX;
         }
 
-        if (movement.keyAPressed == true) {
+        if (movementState.a_keyPressed == true) {
             player.velocity.x = -speedX;
         }
 
-        if (movement.keyWPressed == true && player.inAir == false) {
+        if (movementState.w_keyPressed == true && player.inAir == false) {
             player.jump();
-            movement.keyWPressed = false;
+            movementState.w_keyPressed = false;
         }
 
     // Enemy Section
-        if (movement.keyRAPressed == true) {
+        if (movementState.arrowright_keyPressed == true) {
             enemy1.velocity.x = speedX;
             enemy2.velocity.x = speedX;
         }
 
-        if (movement.keyLAPressed == true) {
+        if (movementState.arrowleft_keyPressed == true) {
             enemy1.velocity.x = -speedX;
             enemy2.velocity.x = -speedX;
         }
 
-        if (movement.keyUAPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
+        if (movementState.arrowup_keyPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
             enemy1.jump();
             enemy2.jump();
-            movement.keyUAPressed = false;
+            movementState.arrowup_keyPressed = false;
         }
 
 
@@ -86,70 +74,37 @@ function animate() {
     enemy2.velocity = {x: 0, y: enemy2.velocity.y};
 }
 
+let keyStrokes = {}
+
 document.addEventListener("keydown", (event) => {
-    console.log(event.key);
-    switch (event.key) {
-        // Player
-        case "a":
-            movement.keyAPressed = true;
-            break;
-        case "d":
-            movement.keyDPressed = true;
-            break;
-        case "w":
-            movement.keyWPressed = true;
-            break;
-        case "s":
-            movement.keySPressed = true;
-            break;
-
-
-        // Enemy
-        case "ArrowLeft":
-            movement.keyLAPressed = true;
-            break;
-        case "ArrowRight":
-            movement.keyRAPressed = true;
-            break;
-        case "ArrowUp":
-            movement.keyUAPressed = true;
-            break;
-        case "ArrowDown":
-            movement.keyDAPressed = true;
-            break;
-    }
+    dynamicCaseIncrement(keyStrokes, event.key.toLowerCase(), keyPressed(event.key)); //adding new cases whenever there's a new key pressed
 });
 
 document.addEventListener("keyup", (event) => {
-    switch (event.key) {
-
-        // Player
-        case "a":
-            movement.keyAPressed = false;
-            break;
-        case "d":
-            movement.keyDPressed = false;
-            break;
-        case "w":
-            movement.keyWPressed = false;
-            break;
-        case "s":
-            movement.keySPressed = false;
-            break;
-
-
-        // Enemy
-        case "ArrowLeft":
-            movement.keyLAPressed = false;
-            break;
-        case "ArrowRight":
-            movement.keyRAPressed = false;
-            break;
-        case "ArrowUp":
-            movement.keyUAPressed = false;
-            break;
-        case "ArrowDown":
-            movement.keyDAPressed = false;
-            break;
-    }
+    keyReleased(event.key);
 });
+
+
+
+function keyPressed(key) {
+    let placeholder = key.toLowerCase() + "_keyPressed";
+    dynamicCaseIncrement(movementState, placeholder, true);
+    movementState[`${placeholder}`] = true;
+    console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
+}
+
+function keyReleased(key) {
+    let placeholder = key.toLowerCase() + "_keyPressed";
+    movementState[`${placeholder}`] = false;
+}
+
+
+// THIS FUNCTION WILL ONLY ADD UNDEFINED CASES, IF THEY'VE EXISTED THEN NOTHING WILL HAPPEN
+function dynamicCaseIncrement(obj, _case, func = null) { // Cannot type "case" and "function" because  they're built-ins.
+    if (obj[_case] == undefined) {
+        obj[_case] = func;
+        // console.log("Obj " + _case + " = " + obj[_case]);
+    }
+
+    return;
+}
