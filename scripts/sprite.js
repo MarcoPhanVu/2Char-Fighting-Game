@@ -1,5 +1,6 @@
 class Sprite {
-    constructor(position, appearance, velocity = {x: 0, y: 0}) {
+    constructor(name, position, appearance, velocity = {x: 0, y: 0}) {
+        this.name = name;
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
@@ -8,10 +9,13 @@ class Sprite {
 
 // Me - future self: fuck you, past me, still unable to fix this. You should've went to sleep earlier instead of making these changes on the WRONG BRANCH!!!
 
+// Update: Fixed, not so hard, isn't it? took me quite sometime.
+// Gotta learn advance git for future cooperating with my colleagues
+
         this.spriteWidth = 40;
         this.spriteHeight = 80;
 
-        this.weapon = {
+        this.attack = {
             posX: this.pos.x + this.spriteWidth,
             posY: this.pos.y + this.spriteHeight,
             width: 60,
@@ -28,9 +32,12 @@ class Sprite {
         con.fillStyle = this.look;
         con.fillRect(this.pos.x, this.pos.y, this.spriteWidth, this.spriteHeight);
 
-        // Weapon
-        con.fillStyle = Celadon;
-        con.fillRect(this.weapon.posX, this.weapon.posY, this.weapon.width, this.weapon.height);
+        // Attack
+        if (charState[`${this.name}`].attacking == true) { // Dynamic name
+            console.log(`${this.name} is to attack`);
+            con.fillStyle = Celadon;
+            con.fillRect(this.attack.posX, this.attack.posY, this.attack.width, this.attack.height);
+        }
     }
 
 
@@ -42,8 +49,8 @@ class Sprite {
         this.pos.x += this.velocity.x;
         this.pos.y += this.velocity.y;
 
-        this.weapon.posX = this.pos.x + this.spriteWidth;
-        this.weapon.posY = this.pos.y;
+        this.attack.posX = this.pos.x + this.spriteWidth;
+        this.attack.posY = this.pos.y;
 
         keepInside(this);
 
