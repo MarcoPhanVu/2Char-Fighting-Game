@@ -4,7 +4,7 @@ function keepInside(obj) {
     if (obj.pos.y + 80 >= display.height) { // Ground
         obj.pos.y = display.height - 80;
         obj.inAir = false;
-        obj.velocity.y = 0; // to prevent weird weapon's Y offsets
+        obj.velocity.y = 0; // to prevent weird attack's Y offsets
     }
 
 
@@ -23,6 +23,20 @@ function checkCollision(gameState) {
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
+const charState = {
+    player: {
+        attacking: false,
+        lookLeft: false
+    },
+    enemy1: {
+        attacking: false,
+        lookLeft: false
+    },
+    enemy2: {
+        attacking: false,
+        lookLeft: false
+    }
+}
 
 let speedX = 8;
 let speedY = 20;
@@ -32,30 +46,41 @@ function animate() {
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
 
+
+// Movement
     //Avoid using elseif because we need to be able to use multiple keys at once
     //Player Section
-        if (movementState.d_keyPressed == true) {
+        if (movementState.d_keyPressed == true) { //Right
             player.velocity.x = speedX;
+            charState.player.lookLeft = false;
         }
 
-        if (movementState.a_keyPressed == true) {
+        if (movementState.a_keyPressed == true) { //Left
             player.velocity.x = -speedX;
+            charState.player.lookLeft = true;
         }
 
         if (movementState.w_keyPressed == true && player.inAir == false) {
             player.jump();
             movementState.w_keyPressed = false;
         }
-
-    // Enemy Section
-        if (movementState.arrowright_keyPressed == true) {
-            enemy1.velocity.x = speedX;
-            enemy2.velocity.x = speedX;
+        if (movementState.spacebar_keyPressed == true) {
+            charState[`${player.name}`].attacking = true;
         }
 
-        if (movementState.arrowleft_keyPressed == true) {
+    // Enemy Section
+        if (movementState.arrowright_keyPressed == true) { //Right
+            enemy1.velocity.x = speedX;
+            enemy2.velocity.x = speedX;
+            charState.enemy1.lookLeft = false;
+            charState.enemy2.lookLeft = false;
+        }
+
+        if (movementState.arrowleft_keyPressed == true) { //Left
             enemy1.velocity.x = -speedX;
             enemy2.velocity.x = -speedX;
+            charState.enemy1.lookLeft = true;
+            charState.enemy2.lookLeft = true;
         }
 
         if (movementState.arrowup_keyPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
@@ -63,12 +88,16 @@ function animate() {
             enemy2.jump();
             movementState.arrowup_keyPressed = false;
         }
-
+        if (movementState.shift_keyPressed == true) {
+            charState[`${enemy1.name}`].attacking = true;
+            charState[`${enemy2.name}`].attacking = true;
+        }
 
     player.update();
     enemy1.update();
     enemy2.update();
 
+    // to stop the character from moving
     player.velocity = {x: 0, y: player.velocity.y};
     enemy1.velocity = {x: 0, y: enemy1.velocity.y};
     enemy2.velocity = {x: 0, y: enemy2.velocity.y};
@@ -77,23 +106,31 @@ function animate() {
 let keyStrokes = {}
 
 document.addEventListener("keydown", (event) => {
-    dynamicCaseIncrement(keyStrokes, event.key.toLowerCase(), keyPressed(event.key)); //adding new cases whenever there's a new key pressed
+    let key = event.key;
+    if (key == " ") {
+        key = "spacebar";
+    }
+    dynamicCaseIncrement(keyStrokes, key.toLowerCase(), keyPressHandler(key)); //adding new cases whenever there's a new key pressed
 });
 
 document.addEventListener("keyup", (event) => {
-    keyReleased(event.key);
+    let key = event.key;
+    if (key == " ") {
+        key = "spacebar"; // Have to add this so that the player can retrieve their attack
+    }
+    keyReleaseHandler(key);
 });
 
 
 
-function keyPressed(key) {
+function keyPressHandler(key) {
     let placeholder = key.toLowerCase() + "_keyPressed";
     dynamicCaseIncrement(movementState, placeholder, true);
     movementState[`${placeholder}`] = true;
     console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
 }
 
-function keyReleased(key) {
+function keyReleaseHandler(key) {
     let placeholder = key.toLowerCase() + "_keyPressed";
     movementState[`${placeholder}`] = false;
 }

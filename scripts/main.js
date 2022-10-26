@@ -42,17 +42,17 @@ con.fillRect(0, 0, display.width, display.height);
 
 
 
-const player = new Sprite({
+const player = new Sprite("player", {
     x: 300,
     y: 24
 }, Celadon, {x: 0, y: -speedY});
 
-const enemy1 = new Sprite({
+const enemy1 = new Sprite("enemy1", {
     x: 560,
     y: 24
 }, ParadisePink, {x: 0, y: -speedY});
 
-const enemy2 = new Sprite({
+const enemy2 = new Sprite("enemy2", {
     x: 120,
     y: 24
 }, FieryRose, {x: 0, y: -speedY});
