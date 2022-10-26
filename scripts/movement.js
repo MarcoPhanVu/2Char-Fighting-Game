@@ -114,7 +114,11 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("keyup", (event) => {
-    keyReleaseHandler(event.key);
+    let key = event.key;
+    if (key == " ") {
+        key = "spacebar"; // Have to add this so that the player can retrieve their attack
+    }
+    keyReleaseHandler(key);
 });
 
 

@@ -37,6 +37,10 @@ class Sprite {
             console.log(`${this.name} is to attack`);
             con.fillStyle = Celadon;
             con.fillRect(this.attack.posX, this.attack.posY, this.attack.width, this.attack.height);
+            setTimeout(() => {
+                charState[`${this.name}`].attacking = false;
+            }, 300)
+            
         }
     }
 
