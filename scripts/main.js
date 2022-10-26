@@ -42,7 +42,6 @@ con.fillRect(0, 0, display.width, display.height);
 
 
 
-
 const player = new Sprite("player", {
     x: 300,
     y: 24
@@ -61,4 +60,4 @@ const enemy2 = new Sprite("enemy2", {
 
 
 
-interval500 = setInterval(animate, 20)
+interval500 = setInterval(animate, 20);
