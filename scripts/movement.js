@@ -23,20 +23,20 @@ function checkCollision(gameState) {
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
-const charState = {
-    player: {
-        attacking: false,
-        lookLeft: false
-    },
-    enemy1: {
-        attacking: false,
-        lookLeft: false
-    },
-    enemy2: {
-        attacking: false,
-        lookLeft: false
-    }
-}
+// const charState = {
+//     player: {
+//         attacking: false,
+//         lookLeft: false
+//     },
+//     enemy1: {
+//         attacking: false,
+//         lookLeft: false
+//     },
+//     enemy2: {
+//         attacking: false,
+//         lookLeft: false
+//     }
+// }
 
 let speedX = 8;
 let speedY = 20;
@@ -52,12 +52,12 @@ function animate() {
     //Player Section
         if (movementState.d_keyPressed == true) { //Right
             player.velocity.x = speedX;
-            charState.player.lookLeft = false;
+            player.attack.direction.toRight = true;
         }
 
         if (movementState.a_keyPressed == true) { //Left
             player.velocity.x = -speedX;
-            charState.player.lookLeft = true;
+            player.attack.direction.toRight = false;
         }
 
         if (movementState.w_keyPressed == true && player.inAir == false) {
@@ -65,22 +65,23 @@ function animate() {
             movementState.w_keyPressed = false;
         }
         if (movementState.spacebar_keyPressed == true) {
-            charState[`${player.name}`].attacking = true;
+            // charState[`${player.name}`].attacking = true;
+            player.attack.ing = true;
         }
 
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
             enemy1.velocity.x = speedX;
             enemy2.velocity.x = speedX;
-            charState.enemy1.lookLeft = false;
-            charState.enemy2.lookLeft = false;
+            enemy1.attack.direction.toRight = true;
+            enemy2.attack.direction.toRight = true;
         }
 
         if (movementState.arrowleft_keyPressed == true) { //Left
             enemy1.velocity.x = -speedX;
             enemy2.velocity.x = -speedX;
-            charState.enemy1.lookLeft = true;
-            charState.enemy2.lookLeft = true;
+            enemy1.attack.direction.toRight = false;
+            enemy2.attack.direction.toRight = false;
         }
 
         if (movementState.arrowup_keyPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
@@ -89,8 +90,11 @@ function animate() {
             movementState.arrowup_keyPressed = false;
         }
         if (movementState.shift_keyPressed == true) {
-            charState[`${enemy1.name}`].attacking = true;
-            charState[`${enemy2.name}`].attacking = true;
+            // charState[`${enemy1.name}`].attacking = true;
+            // charState[`${enemy2.name}`].attacking = true;
+
+            enemy1.attack.ing = true;
+            enemy2.attack.ing = true;
         }
 
     player.update();
@@ -121,13 +125,15 @@ document.addEventListener("keyup", (event) => {
     keyReleaseHandler(key);
 });
 
-
-
 function keyPressHandler(key) {
     let placeholder = key.toLowerCase() + "_keyPressed";
     dynamicCaseIncrement(movementState, placeholder, true);
     movementState[`${placeholder}`] = true;
-    console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
+
+
+    // console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
+    console.log(player.attack.direction);
+    console.log(enemy1.attack.direction);
 }
 
 function keyReleaseHandler(key) {

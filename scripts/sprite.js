@@ -11,11 +11,16 @@ class Sprite {
 
 // Update: Fixed, not so hard, isn't it? took me quite sometime.
 // Gotta learn advance git for future cooperating with my colleagues
-
         this.spriteWidth = 40;
         this.spriteHeight = 80;
 
         this.attack = {
+            ing: true,
+            direction: {
+                toRight: true, //All char will look right as default
+                toUp: false,
+                toDown: false,
+            },
             posX: this.pos.x + this.spriteWidth,
             posY: this.pos.y + this.spriteHeight,
             width: 60,
@@ -33,14 +38,23 @@ class Sprite {
         con.fillRect(this.pos.x, this.pos.y, this.spriteWidth, this.spriteHeight);
 
         // Attack
-        if (charState[`${this.name}`].attacking == true) { // Dynamic name
-            console.log(`${this.name} is to attack`);
+
+        // if (charState[`${this.name}`].attacking == true) { // Dynamic name
+
+        if (this.attack.ing == true) { // Dynamic name
+            // console.log(`${this.name} is to attack`);
+
             con.fillStyle = Celadon;
             con.fillRect(this.attack.posX, this.attack.posY, this.attack.width, this.attack.height);
+
+
             setTimeout(() => {
-                charState[`${this.name}`].attacking = false;
-            }, 300)
-            
+                this.attack.ing = false; // to stop char from attacking for ever
+            }, 200)
+
+            // setTimeout(() => {
+            //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
+            // }, 200)
         }
     }
 
