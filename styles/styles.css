@@ -1,0 +1,21 @@
+* {
+    
+}
+
+table {
+    border: 2px solid black;
+}
+
+
+
+#main-display {
+    /* background-color: teal; */
+}
+
+
+.reporter {
+    /* background-color: salmon; */
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+}

@@ -17,8 +17,14 @@ function keepInside(obj) {
     }
 }
 
-function checkCollision(gameState) {
-    
+function checkCollision(base, target) {
+    if (base.stats.self.x) {
+        
+    }
+}
+
+function checkHit(base, target) {
+    // base
 }
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
@@ -45,7 +51,6 @@ function animate() {
     con.clearRect(0, 0, display.width, display.height);
     con.fillStyle = FeldGrau;
     con.fillRect(0, 0, display.width, display.height);
-
 
 // Movement
     //Avoid using elseif because we need to be able to use multiple keys at once
@@ -98,6 +103,10 @@ function animate() {
         }
 
     player.update();
+    // console.log(`P x: ${player.pos.x}`);
+    // console.log(`P y: ${player.pos.y}`);
+    // console.log(`E x: ${enemy1.pos.x}`);
+    // console.log(`E y: ${enemy1.pos.y}`);
     enemy1.update();
     enemy2.update();
 
@@ -132,8 +141,9 @@ function keyPressHandler(key) {
 
 
     // console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
-    console.log(player.attack.direction);
-    console.log(enemy1.attack.direction);
+    // console.log(player.attack.direction);
+    console.log("enemy1: ", enemy1.attack.direction.toRight);
+    console.log("enemy2: ", enemy2.attack.direction.toRight);
 }
 
 function keyReleaseHandler(key) {
