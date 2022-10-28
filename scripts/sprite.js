@@ -26,21 +26,6 @@ class Sprite {
             width: 60,
             height: 20
         }
-        
-        this.stats = {
-            self: {
-                x: this.pos.x,
-                y: this.pos.y,
-                w: this.spriteWidth,
-                h: this.spriteHeight
-            },
-            attack: {
-                x: this.attack.posX,
-                y: this.attack.posY,
-                w: this.attack.width,
-                h: this.attack.height
-            }
-        }
 
         // States
         this.inAir = true;

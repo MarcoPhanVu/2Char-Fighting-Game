@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;400;600&display=swap');
+
 * {
-    
+    font-family: "Montserrat", sans-serif;
+    font-family: "Fuzzy Bubble", cursive;
+    font-family: "Source Code Pro", monospace;
+}
+
+body {
+    background-color: rgb(120, 120, 120);
 }
 
 table {
@@ -18,4 +28,30 @@ table {
     display: inline-block;
     position: relative;
     vertical-align: top;
+    border-collapse: collapse; /* to eliminate the space between cells */
+
+}
+
+.reporter caption,
+.reporter td,
+.reporter th,
+.reporter tr {
+    /* background-color: blue; */
+    padding: 8px;
+    border: 1px #000 solid;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.reporter tr:nth-child(even) {
+    background-color: rgb(128, 128, 128);
+}
+
+.reporter [scope="col"] {
+    background-color: rgb(64, 64, 64);
+    color: #fff;
+}
+
+.reporter [scope="row"] {
+    background-color: rgb(120, 120, 120);
+    color: #fff;
 }

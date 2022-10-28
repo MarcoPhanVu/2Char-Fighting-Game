@@ -18,7 +18,7 @@ function keepInside(obj) {
 }
 
 function checkCollision(base, target) {
-    if (base.stats.self.x) {
+    if (base.pos.x) {
         
     }
 }
@@ -28,21 +28,6 @@ function checkHit(base, target) {
 }
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
-
-// const charState = {
-//     player: {
-//         attacking: false,
-//         lookLeft: false
-//     },
-//     enemy1: {
-//         attacking: false,
-//         lookLeft: false
-//     },
-//     enemy2: {
-//         attacking: false,
-//         lookLeft: false
-//     }
-// }
 
 let speedX = 8;
 let speedY = 20;

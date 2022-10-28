@@ -1,5 +1,9 @@
 const display = document.querySelector("#main-display");
 
+const charState = document.querySelectorAll("[char-state]");
+const charLocation = document.querySelectorAll("[char-location]");
+const charExtInfo = document.querySelectorAll("[char-extra-in4]");
+
 const con = display.getContext("2d");
 
 let screenRatio = 0.6;
@@ -57,7 +61,18 @@ const enemy2 = new Sprite("enemy2", {
     y: 24
 }, FieryRose, {x: 0, y: -speedY});
 
+function updateReport(obj, index) {
+    let x = Math.round(obj.pos.x);
+    let y = Math.round(obj.pos.y);
+    charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.spriteWidth}) - ${y + obj.spriteHeight})`
+}
 
+function execute() {
+    updateReport(player, 0);
+    updateReport(enemy1, 1);
+    updateReport(enemy2, 2);
 
+    animate();
+}
 
-interval500 = setInterval(animate, 20);
+interval500 = setInterval(execute, 20);
