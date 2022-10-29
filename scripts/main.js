@@ -1,15 +1,19 @@
 const display = document.querySelector("#main-display");
+const con = display.getContext("2d");
+let screenRatio = 0.6;
+display.width = 960 * screenRatio;
+display.height = 480 * screenRatio;
+
 
 const charState = document.querySelectorAll("[char-state]");
 const charLocation = document.querySelectorAll("[char-location]");
 const charExtInfo = document.querySelectorAll("[char-extra-in4]");
 
-const con = display.getContext("2d");
+const colorDisplayer = document.querySelectorAll(".color-displayer")
+colorDisplayer.innerHTML = "hey";
 
-let screenRatio = 0.6;
+const para = document.createElement("p");
 
-display.width = 960 * screenRatio;
-display.height = 480 * screenRatio;
 
 
 // COLORS START
@@ -48,8 +52,8 @@ con.fillRect(0, 0, display.width, display.height);
 
 const player = new Sprite("player", {
     x: 300,
-    y: 24
-}, Celadon, {x: 0, y: -speedY});
+    y: 80
+}, Celadon, {x: 0, y: speedY});
 
 const enemy1 = new Sprite("enemy1", {
     x: 560,
@@ -69,6 +73,7 @@ function updateReport(obj, index) {
 }
 
 function execute() {
+    charState[0].innerHTML = player.attack.posY;
     updateReport(player, 0);
     updateReport(enemy1, 1);
     updateReport(enemy2, 2);

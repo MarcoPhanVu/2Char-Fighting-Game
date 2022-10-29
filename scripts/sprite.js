@@ -16,13 +16,9 @@ class Sprite {
 
         this.attack = {
             ing: true,
-            direction: {
-                toRight: true, //All char will look right as default
-                toUp: false,
-                toDown: false,
-            },
-            posX: this.pos.x + this.spriteWidth,
-            posY: this.pos.y + this.spriteHeight,
+            direction: "toRight",
+            posX: this.pos.x,
+            posY: this.pos.y,
             width: 60,
             height: 20
         }
@@ -42,16 +38,20 @@ class Sprite {
         // if (charState[`${this.name}`].attacking == true) { // Dynamic name
 
         if (this.attack.ing == true) { // Dynamic name
-            // console.log(`${this.name} is to attack`);
-
-            con.fillStyle = Celadon;
-            con.fillRect(this.attack.posX, this.attack.posY, this.attack.width, this.attack.height);
-
+            console.log(`${this.name} is to attack`);
+            con.fillStyle = CaribeanGreen;
+            
+            if (this.attack.direction == "toRight") {
+                con.fillRect(this.attack.posX, this.attack.posY, this.attack.width, -this.attack.height);
+            } 
+            if (this.attack.direction == "toLeft") {
+                con.fillRect(this.attack.posX - this.spriteWidth, this.attack.posY, -this.attack.width, -this.attack.height);
+            }
 
             setTimeout(() => {
                 this.attack.ing = false; // to stop char from attacking for ever
             }, 200)
-
+            
             // setTimeout(() => {
             //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
             // }, 200)
@@ -66,11 +66,12 @@ class Sprite {
 
         this.pos.x += this.velocity.x;
         this.pos.y += this.velocity.y;
+        
+        keepInside(this); // has to be above oso that attack won't "bounce"
 
         this.attack.posX = this.pos.x + this.spriteWidth;
-        this.attack.posY = this.pos.y;
+        this.attack.posY = this.pos.y + this.spriteHeight/2;
 
-        keepInside(this);
 
         this.draw();
     }

@@ -42,12 +42,12 @@ function animate() {
     //Player Section
         if (movementState.d_keyPressed == true) { //Right
             player.velocity.x = speedX;
-            player.attack.direction.toRight = true;
+            player.attack.direction = "toRight";
         }
 
         if (movementState.a_keyPressed == true) { //Left
             player.velocity.x = -speedX;
-            player.attack.direction.toRight = false;
+            player.attack.direction = "toLeft";
         }
 
         if (movementState.w_keyPressed == true && player.inAir == false) {
@@ -63,15 +63,15 @@ function animate() {
         if (movementState.arrowright_keyPressed == true) { //Right
             enemy1.velocity.x = speedX;
             enemy2.velocity.x = speedX;
-            enemy1.attack.direction.toRight = true;
-            enemy2.attack.direction.toRight = true;
+            enemy1.attack.direction = "toRight";
+            enemy2.attack.direction = "toRight";
         }
 
         if (movementState.arrowleft_keyPressed == true) { //Left
             enemy1.velocity.x = -speedX;
             enemy2.velocity.x = -speedX;
-            enemy1.attack.direction.toRight = false;
-            enemy2.attack.direction.toRight = false;
+            enemy1.attack.direction = "toLeft";
+            enemy2.attack.direction = "toLeft";
         }
 
         if (movementState.arrowup_keyPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
@@ -88,10 +88,6 @@ function animate() {
         }
 
     player.update();
-    // console.log(`P x: ${player.pos.x}`);
-    // console.log(`P y: ${player.pos.y}`);
-    // console.log(`E x: ${enemy1.pos.x}`);
-    // console.log(`E y: ${enemy1.pos.y}`);
     enemy1.update();
     enemy2.update();
 
@@ -125,10 +121,6 @@ function keyPressHandler(key) {
     movementState[`${placeholder}`] = true;
 
 
-    // console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
-    // console.log(player.attack.direction);
-    console.log("enemy1 lookRight: ", enemy1.attack.direction.toRight);
-    console.log("enemy2 lookRight: ", enemy2.attack.direction.toRight);
 }
 
 function keyReleaseHandler(key) {
@@ -141,7 +133,6 @@ function keyReleaseHandler(key) {
 function dynamicCaseIncrement(obj, _case, func = null) { // Cannot type "case" and "function" because  they're built-ins.
     if (obj[_case] == undefined) {
         obj[_case] = func;
-        // console.log("Obj " + _case + " = " + obj[_case]);
     }
 
     return;
