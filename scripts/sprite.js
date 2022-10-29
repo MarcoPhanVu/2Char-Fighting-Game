@@ -11,14 +11,16 @@ class Sprite {
 
 // Update: Fixed, not so hard, isn't it? took me quite sometime.
 // Gotta learn advance git for future cooperating with my colleagues
-        this.spriteWidth = 40;
-        this.spriteHeight = 80;
+        this.width = 40;
+        this.height = 80;
 
         this.attack = {
             ing: true,
             direction: "toRight",
-            posX: this.pos.x,
-            posY: this.pos.y,
+            pos: {
+                x: this.pos.x,
+                y: this.pos.y
+            },
             width: 60,
             height: 20
         }
@@ -31,27 +33,35 @@ class Sprite {
     draw() {
         // Sprite
         con.fillStyle = this.look;
-        con.fillRect(this.pos.x, this.pos.y, this.spriteWidth, this.spriteHeight);
+        con.fillRect(this.pos.x, this.pos.y, this.width, this.height);
 
         // Attack
 
         // if (charState[`${this.name}`].attacking == true) { // Dynamic name
 
         if (this.attack.ing == true) { // Dynamic name
-            console.log(`${this.name} is to attack`);
             con.fillStyle = CaribeanGreen;
             
             if (this.attack.direction == "toRight") {
-                con.fillRect(this.attack.posX, this.attack.posY, this.attack.width, -this.attack.height);
+                con.fillRect(this.attack.pos.x, this.attack.posY, this.attack.width, -this.attack.height);
             } 
             if (this.attack.direction == "toLeft") {
-                con.fillRect(this.attack.posX - this.spriteWidth, this.attack.posY, -this.attack.width, -this.attack.height);
+                con.fillRect(this.attack.pos.x - this.width -this.attack.width, this.attack.posY, this.attack.width, -this.attack.height);
             }
 
-            setTimeout(() => {
+            charState[0].innerHTML = checkCollision(player.attack, enemy2);
+            charState[1].innerHTML = checkCollision(player.attack, enemy1);
+
+            setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
             }, 200)
+
+            // setTimeout(() => {
+            //     let i = 0;
+            //     charState[1].innerHTML = "nothing yet";
+            // }, 1000)
             
+
             // setTimeout(() => {
             //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
             // }, 200)
@@ -69,8 +79,8 @@ class Sprite {
         
         keepInside(this); // has to be above oso that attack won't "bounce"
 
-        this.attack.posX = this.pos.x + this.spriteWidth;
-        this.attack.posY = this.pos.y + this.spriteHeight/2;
+        this.attack.pos.x = this.pos.x + this.width;
+        this.attack.posY = this.pos.y + this.height/2;
 
 
         this.draw();

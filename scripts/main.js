@@ -69,11 +69,11 @@ function updateReport(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
 
-    charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.spriteWidth}) - ${y + obj.spriteHeight})`
+    charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.width}) - ${y + obj.height})`
 }
 
 function execute() {
-    charState[0].innerHTML = player.attack.posY;
+    // charState[0].innerHTML = checkCollision(player.attack, enemy2);
     updateReport(player, 0);
     updateReport(enemy1, 1);
     updateReport(enemy2, 2);
