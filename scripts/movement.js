@@ -127,8 +127,8 @@ function keyPressHandler(key) {
 
     // console.log(`${placeholder}: ` + movementState[`${placeholder}`]);
     // console.log(player.attack.direction);
-    console.log("enemy1: ", enemy1.attack.direction.toRight);
-    console.log("enemy2: ", enemy2.attack.direction.toRight);
+    console.log("enemy1 lookRight: ", enemy1.attack.direction.toRight);
+    console.log("enemy2 lookRight: ", enemy2.attack.direction.toRight);
 }
 
 function keyReleaseHandler(key) {

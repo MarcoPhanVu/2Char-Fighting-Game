@@ -65,9 +65,6 @@ function updateReport(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
 
-    numLengthSet(x, 3);
-    numLengthSet(y, 3);
-
     charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.spriteWidth}) - ${y + obj.spriteHeight})`
 }
 
@@ -77,25 +74,6 @@ function execute() {
     updateReport(enemy2, 2);
 
     animate();
-}
-
-
-function numLengthSet(num, set) {
-    let numLen = 0;
-    temp = num
-    while(temp >= 1) {
-        temp /= 10;
-        ++numLen;
-    }
-    if (numLen >= set) {
-        return num;
-    }
-
-    let ite = set - numLen;
-    for (let i = 0; i < ite; ++i) {
-        num = "0" + num;
-    }
-    return num;
 }
 
 interval500 = setInterval(execute, 20);
