@@ -57,13 +57,13 @@ const player = new Sprite("player", {
 
 const enemy1 = new Sprite("enemy1", {
     x: 560,
-    y: 24
-}, ParadisePink, {x: 0, y: -speedY});
+    y: 200
+}, ParadisePink, {x: 0, y: speedY});
 
 const enemy2 = new Sprite("enemy2", {
     x: 120,
-    y: 24
-}, FieryRose, {x: 0, y: -speedY});
+    y: 64
+}, FieryRose, {x: 0, y: speedY});
 
 function updateReport(obj, index) {
     let x = Math.round(obj.pos.x);

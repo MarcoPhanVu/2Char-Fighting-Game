@@ -1,4 +1,4 @@
-let gravity = 1.2;
+let gravity = 0;
 
 function keepInside(obj) {
     if (obj.pos.y + 80 >= display.height) { // Ground
@@ -17,13 +17,49 @@ function keepInside(obj) {
 }
 
 function checkCollision(base, target) {
-    // target on right
+    let verHit = false;
+    let horHit = false;
+
+    let startX = (role) => role.pos.x;
+    let endX = (role) => role.pos.x + role.width;
+    let startY = (role) => role.pos.y;
+    let endY = (role) => role.pos.y + role.height;
+
+
+    // Horizontally
     if ( 
-        (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) 
+        ( startX(base) >= startX(target) && startX(base) <= endX(target) ) 
     ||
-        (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) 
+        ( endX(base) >= startX(target) && endX(base) <= endX(target) )
+    ||
+        ( startX(target) >= startX(base) && startX(target) <= endX(base) )
+    ||
+        ( endX(base) >= startX(target) && endX(base) <= endX(target) )
     ) {
-        return "Target hit";
+        horHit = true;
+    }
+
+    // Vertically
+    if ( 
+        ( startY(base) >= startY(target) && startY(base) <= endX(target) ) 
+    ||
+        ( endY(base) >= startY(target) && endY(base) <= endY(target) )
+    ||
+        ( startY(target) >= startY(base) && startY(target) <= endY(base) )
+    ||
+        ( endY(base) >= startY(target) && endY(base) <= endY(target) )
+    ) {
+        verHit = true;
+    }
+
+    // charState[0].innerHTML = `Attack YLoc: ${startY(base)}`;
+    // charState[1].innerHTML = `Attack YEnd: ${endY(base)}`;
+    // charExtInfo[0].innerHTML = `E YLoc: ${startY(target)}`;
+    // charExtInfo[1].innerHTML = `E YEnd: ${endY(target)}`;
+
+
+    if (horHit && verHit) {
+        return `${target.name} hit`;
     }
 }
 
@@ -31,7 +67,7 @@ function checkCollision(base, target) {
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
 let speedX = 8;
-let speedY = 20;
+let speedY = 0;
 
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
@@ -51,12 +87,21 @@ function animate() {
             player.attack.direction = "toLeft";
         }
 
-        if (movementState.w_keyPressed == true && player.inAir == false) {
-            player.jump();
-            movementState.w_keyPressed = false;
-        }
+        // if (movementState.w_keyPressed == true && player.inAir == false) {
+        //     player.jump();
+        //     movementState.w_keyPressed = false;
+        // }
+
         if (movementState.spacebar_keyPressed == true) {
             player.attack.ing = true;
+        }
+
+
+        if (movementState.w_keyPressed) { //Left
+            player.pos.y -= 5;
+        }
+        if (movementState.s_keyPressed) { //Left
+            player.pos.y += 5;
         }
 
     // Enemy Section
