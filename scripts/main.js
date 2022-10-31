@@ -53,17 +53,17 @@ con.fillRect(0, 0, display.width, display.height);
 const player = new Sprite("player", {
     x: 300,
     y: 80
-}, Celadon, {x: 0, y: speedY});
+}, Celadon, {x: 0, y: -speedY});
 
 const enemy1 = new Sprite("enemy1", {
     x: 560,
     y: 200
-}, ParadisePink, {x: 0, y: speedY});
+}, ParadisePink, {x: 0, y: -speedY});
 
 const enemy2 = new Sprite("enemy2", {
     x: 120,
     y: 64
-}, FieryRose, {x: 0, y: speedY});
+}, FieryRose, {x: 0, y: -speedY});
 
 function updateReport(obj, index) {
     let x = Math.round(obj.pos.x);

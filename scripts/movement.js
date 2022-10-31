@@ -1,4 +1,4 @@
-let gravity = 0;
+let gravity = 1.2;
 
 function keepInside(obj) {
     if (obj.pos.y + 80 >= display.height) { // Ground
@@ -67,7 +67,7 @@ function checkCollision(base, target) {
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
 let speedX = 8;
-let speedY = 0;
+let speedY = 20;
 
 function animate() {
     con.clearRect(0, 0, display.width, display.height);
@@ -87,22 +87,23 @@ function animate() {
             player.attack.direction = "toLeft";
         }
 
-        // if (movementState.w_keyPressed == true && player.inAir == false) {
-        //     player.jump();
-        //     movementState.w_keyPressed = false;
-        // }
+        if (movementState.w_keyPressed == true && player.inAir == false) {
+            player.jump();
+            movementState.w_keyPressed = false;
+        }
 
         if (movementState.spacebar_keyPressed == true) {
             player.attack.ing = true;
+            // console.log("hey");
         }
 
 
-        if (movementState.w_keyPressed) { //Left
-            player.pos.y -= 5;
-        }
-        if (movementState.s_keyPressed) { //Left
-            player.pos.y += 5;
-        }
+        // if (movementState.w_keyPressed) {
+        //     player.pos.y -= 5;
+        // }
+        // if (movementState.s_keyPressed) {
+        //     player.pos.y += 5;
+        // }
 
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
