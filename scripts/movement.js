@@ -134,20 +134,21 @@ function animate() {
     enemy1.update();
     enemy2.update();
 
-    // to stop the character from moving
+    // to stop the character from moving horizontally and keep on falling/jumping
     player.velocity = {x: 0, y: player.velocity.y};
     enemy1.velocity = {x: 0, y: enemy1.velocity.y};
     enemy2.velocity = {x: 0, y: enemy2.velocity.y};
 }
 
-let keyStrokes = {}
+// let keyStrokes = {}
 
 document.addEventListener("keydown", (event) => {
     let key = event.key;
     if (key == " ") {
         key = "spacebar";
     }
-    dynamicCaseIncrement(keyStrokes, key.toLowerCase(), keyPressHandler(key)); //adding new cases whenever there's a new key pressed
+    // dynamicCaseIncrement(keyStrokes, key.toLowerCase(), keyPressHandler(key)); //adding new cases whenever there's a new key pressed
+    keyPressHandler(key);
 });
 
 document.addEventListener("keyup", (event) => {
