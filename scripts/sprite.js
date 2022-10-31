@@ -21,7 +21,7 @@ class Sprite {
                 x: this.pos.x,
                 y: this.pos.y
             },
-            width: 100,
+            width: 60,
             height: 20
         }
 
@@ -37,11 +37,13 @@ class Sprite {
 
         // Attack
 
-        if (this.attack.ing) { // Dynamic name
+        // if (charState[`${this.name}`].attacking == true) { // Dynamic name
+
+        if (this.attack.ing == true) { // Dynamic name
             con.fillStyle = CaribeanGreen;
             
             if (this.attack.direction == "toRight") {
-                con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
+                con.fillRect(this.attack.pos.x, this.attack.posY, this.attack.width, -this.attack.height);
             } 
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
@@ -55,7 +57,16 @@ class Sprite {
             setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
             }, 200)
+
+            // setTimeout(() => {
+            //     let i = 0;
+            //     charState[1].innerHTML = "nothing yet";
+            // }, 1000)
             
+
+            // setTimeout(() => {
+            //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
+            // }, 200)
         }
     }
 
@@ -71,7 +82,7 @@ class Sprite {
         keepInside(this); // has to be above oso that attack won't "bounce"
 
         this.attack.pos.x = this.pos.x + this.width;
-        this.attack.pos.y = this.pos.y + this.height/2;
+        this.attack.posY = this.pos.y + this.height/2;
 
 
         this.draw();
