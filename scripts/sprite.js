@@ -43,7 +43,7 @@ class Sprite {
             con.fillStyle = CaribeanGreen;
             // debugger
             if (this.attack.direction == "toRight") {
-                con.fillRect(this.attack.pos.x, this.attack.posY, this.attack.width, -this.attack.height);
+                con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             } 
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
@@ -82,7 +82,7 @@ class Sprite {
         keepInside(this); // has to be above oso that attack won't "bounce"
 
         this.attack.pos.x = this.pos.x + this.width;
-        this.attack.posY = this.pos.y + this.height/2;
+        this.attack.pos.y = this.pos.y + this.height/2;
 
 
         this.draw();
