@@ -41,7 +41,7 @@ class Sprite {
 
         if (this.attack.ing == true) { // Dynamic name
             con.fillStyle = CaribeanGreen;
-            
+            // debugger
             if (this.attack.direction == "toRight") {
                 con.fillRect(this.attack.pos.x, this.attack.posY, this.attack.width, -this.attack.height);
             } 

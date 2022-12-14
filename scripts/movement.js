@@ -67,6 +67,11 @@ function animate() {
         //     player.pos.y += 5;
         // }
 
+        if (movementState.k_keyPressed == true) {
+            console.log("pressed");
+            debugger;
+        }
+
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
             enemy1.velocity.x = speedX;

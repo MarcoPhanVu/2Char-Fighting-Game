@@ -9,7 +9,7 @@ const charState = document.querySelectorAll("[char-state]");
 const charLocation = document.querySelectorAll("[char-location]");
 const charExtInfo = document.querySelectorAll("[char-extra-in4]");
 
-const colorDisplayer = document.querySelectorAll(".color-displayer")
+const colorDisplayer = document.querySelectorAll(".color-displayer");
 colorDisplayer.innerHTML = "hey";
 
 const para = document.createElement("p");
