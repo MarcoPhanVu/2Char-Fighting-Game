@@ -21,7 +21,7 @@ class Sprite {
                 x: this.pos.x,
                 y: this.pos.y
             },
-            width: 100,
+            width: 60,
             height: 20
         }
 
@@ -37,9 +37,11 @@ class Sprite {
 
         // Attack
 
-        if (this.attack.ing) { // Dynamic name
+        // if (charState[`${this.name}`].attacking == true) { // Dynamic name
+
+        if (this.attack.ing == true) { // Dynamic name
             con.fillStyle = CaribeanGreen;
-            
+            // debugger
             if (this.attack.direction == "toRight") {
                 con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             } 
@@ -55,7 +57,16 @@ class Sprite {
             setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
             }, 200)
+
+            // setTimeout(() => {
+            //     let i = 0;
+            //     charState[1].innerHTML = "nothing yet";
+            // }, 1000)
             
+
+            // setTimeout(() => {
+            //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
+            // }, 200)
         }
     }
 

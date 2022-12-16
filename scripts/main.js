@@ -9,7 +9,7 @@ const charState = document.querySelectorAll("[char-state]");
 const charLocation = document.querySelectorAll("[char-location]");
 const charExtInfo = document.querySelectorAll("[char-extra-in4]");
 
-const colorDisplayer = document.querySelectorAll(".color-displayer")
+const colorDisplayer = document.querySelectorAll(".color-displayer");
 colorDisplayer.innerHTML = "hey";
 
 const para = document.createElement("p");
@@ -65,19 +65,19 @@ const enemy2 = new Sprite("enemy2", {
     y: 64
 }, FieryRose, {x: 0, y: -speedY});
 
-function updateReport(obj, index) {
+function updateLoc(obj) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
 
-    charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.width}) - ${y + obj.height})`
+    // charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.width}) - ${y + obj.height})`
 }
 
 function execute() {
     // charState[0].innerHTML = checkCollision(player.attack, enemy2);
-    updateReport(player, 0);
-    updateReport(enemy1, 1);
-    updateReport(enemy2, 2);
-
+    updateLoc(player.attack, 0);
+    updateLoc(enemy1.attack, 1);
+    updateLoc(enemy2.attack, 2);
+    console.log("player atk: ", player.attack.pos);
     animate();
 }
 

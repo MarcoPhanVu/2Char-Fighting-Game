@@ -17,49 +17,13 @@ function keepInside(obj) {
 }
 
 function checkCollision(base, target) {
-    let verHit = false;
-    let horHit = false;
-
-    let startX = (role) => role.pos.x;
-    let endX = (role) => role.pos.x + role.width;
-    let startY = (role) => role.pos.y;
-    let endY = (role) => role.pos.y + role.height;
-
-
-    // Horizontally
+    // target on right
     if ( 
-        ( startX(base) >= startX(target) && startX(base) <= endX(target) ) 
+        (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) 
     ||
-        ( endX(base) >= startX(target) && endX(base) <= endX(target) )
-    ||
-        ( startX(target) >= startX(base) && startX(target) <= endX(base) )
-    ||
-        ( endX(base) >= startX(target) && endX(base) <= endX(target) )
+        (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) 
     ) {
-        horHit = true;
-    }
-
-    // Vertically
-    if ( 
-        ( startY(base) >= startY(target) && startY(base) <= endX(target) ) 
-    ||
-        ( endY(base) >= startY(target) && endY(base) <= endY(target) )
-    ||
-        ( startY(target) >= startY(base) && startY(target) <= endY(base) )
-    ||
-        ( endY(base) >= startY(target) && endY(base) <= endY(target) )
-    ) {
-        verHit = true;
-    }
-
-    // charState[0].innerHTML = `Attack YLoc: ${startY(base)}`;
-    // charState[1].innerHTML = `Attack YEnd: ${endY(base)}`;
-    // charExtInfo[0].innerHTML = `E YLoc: ${startY(target)}`;
-    // charExtInfo[1].innerHTML = `E YEnd: ${endY(target)}`;
-
-
-    if (horHit && verHit) {
-        return `${target.name} hit`;
+        return "Target hit";
     }
 }
 
@@ -91,12 +55,10 @@ function animate() {
             player.jump();
             movementState.w_keyPressed = false;
         }
-
         if (movementState.spacebar_keyPressed == true) {
             player.attack.ing = true;
             // console.log("hey");
         }
-
 
         // if (movementState.w_keyPressed) {
         //     player.pos.y -= 5;
@@ -104,6 +66,11 @@ function animate() {
         // if (movementState.s_keyPressed) {
         //     player.pos.y += 5;
         // }
+
+        if (movementState.k_keyPressed == true) {
+            console.log("pressed");
+            debugger;
+        }
 
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
