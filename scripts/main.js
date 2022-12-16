@@ -3,17 +3,17 @@ const con = display.getContext("2d");
 let screenRatio = 0.6;
 display.width = 960 * screenRatio;
 display.height = 480 * screenRatio;
+// Main Canvas
 
-
+// Extra Information
 const charState = document.querySelectorAll("[char-state]");
 const charLocation = document.querySelectorAll("[char-location]");
 const charExtInfo = document.querySelectorAll("[char-extra-in4]");
 
 const colorDisplayer = document.querySelectorAll(".color-displayer");
-colorDisplayer.innerHTML = "hey";
+colorDisplayer[0].innerHTML = "okay this works";
 
 const para = document.createElement("p");
-
 
 
 // COLORS START
@@ -39,8 +39,8 @@ const para = document.createElement("p");
     Melon = "#FCB1A6";
     UnbleachedSilk = "#FFDCCC";
     FloralWhite = "#FFF9EC"
-
 // COLORS END
+
 
 
 // BACKGROUND START
@@ -53,30 +53,30 @@ con.fillRect(0, 0, display.width, display.height);
 const player = new Sprite("player", {
     x: 300,
     y: 80
-}, Celadon, {x: 0, y: -speedY});
+}, Celadon, 500, {x: 0, y: -speedY});
 
 const enemy1 = new Sprite("enemy1", {
     x: 560,
     y: 200
-}, ParadisePink, {x: 0, y: -speedY});
+}, ParadisePink, 800, {x: 0, y: -speedY});
 
 const enemy2 = new Sprite("enemy2", {
     x: 120,
     y: 64
-}, FieryRose, {x: 0, y: -speedY});
+}, FieryRose, 1000,{x: 0, y: -speedY});
 
 function updateStat(obj, index) {
-    let x = Math.round(obj.pos.x);
-    let y = Math.round(obj.pos.y);
+    // let x = Math.round(obj.pos.x);
+    // let y = Math.round(obj.pos.y);
 
-    charLocation[index].innerHTML = `(${x} - ${y}) => (${x + obj.width}) - ${y + obj.height})`
+    charLocation[index].innerHTML = `${obj.name} : ${obj.hp}`;
 }
 
 function execute() {
     // charState[0].innerHTML = checkCollision(player.attack, enemy2);
-    updateStat(player.attack, 0);
-    updateStat(enemy1.attack, 1);
-    updateStat(enemy2.attack, 2);
+    updateStat(player, 0);
+    updateStat(enemy1, 1);
+    updateStat(enemy2, 2);
     // console.log("player atk: ", player.attack.pos);
     animate();
 }

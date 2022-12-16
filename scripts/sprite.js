@@ -1,8 +1,9 @@
 class Sprite {
-    constructor(name, position, appearance, velocity = {x: 0, y: 0}) {
+    constructor(name, position, appearance, hitpoints = 1000, velocity = {x: 0, y: 0}) {
         this.name = name;
         this.pos = position;
         this.look = appearance;
+        this.hp = hitpoints;
         this.velocity = velocity;
 
         this.width = 40;
