@@ -26,12 +26,29 @@ class Sprite {
 
     draw() {
         // Sprite
+        if (this.inAir) {
+            this.velocity.y += gravity;
+        }
+
+        this.pos.x += this.velocity.x;
+        this.pos.y += this.velocity.y;
+
         con.fillStyle = this.look;
         con.fillRect(this.pos.x, this.pos.y, this.width, this.height);
 
-        // Attack
+        keepInside(this);
 
-        // if (charState[`${this.name}`].attacking == true) { // Dynamic name
+        // setTimeout(() => {
+        //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
+        // }, 200)
+        
+    }
+
+
+    
+    attacking() {
+        this.attack.pos.x = this.pos.x + this.width;
+        this.attack.pos.y = this.pos.y + this.height/2;
 
         if (this.attack.ing == true) { // Dynamic name
             con.fillStyle = CaribeanGreen;
@@ -44,38 +61,33 @@ class Sprite {
                 con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
                 charState
             }
-
-            charState[1].innerHTML = `Enemy1 ${checkCollision(this.attack, enemy1)}`;
-            charState[2].innerHTML = `Enemy2 ${checkCollision(this.attack, enemy2)}`;
-
+            
             setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
-            }, 200)         
-
-            // setTimeout(() => {
-            //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
-            // }, 200)
+            }, 200)  
         }
+
+        charState[1].innerHTML = `Enemy1 ${checkCollision(this.attack, enemy1)}`;
+        charState[2].innerHTML = `Enemy2 ${checkCollision(this.attack, enemy2)}`;
     }
+    
+    // update() {
+    //     if (this.inAir) {
+    //         this.velocity.y += gravity;
+    //     }
 
-
-    update() {
-        if (this.inAir) {
-            this.velocity.y += gravity;
-        }
-
-        this.pos.x += this.velocity.x;
-        this.pos.y += this.velocity.y;
+    //     this.pos.x += this.velocity.x;
+    //     this.pos.y += this.velocity.y;
         
-        keepInside(this); // has to be above oso that attack won't "bounce"
+    //     keepInside(this); // has to be above oso that attack won't "bounce"
 
-        this.attack.pos.x = this.pos.x + this.width;
-        this.attack.pos.y = this.pos.y + this.height/2;
+    //     this.attack.pos.x = this.pos.x + this.width;
+    //     this.attack.pos.y = this.pos.y + this.height/2;
 
 
-        this.draw();
-    }
-
+    //     this.draw();
+    //     this.attacking();
+    // }
 
     jump() {
         this.velocity.y = -speedY;

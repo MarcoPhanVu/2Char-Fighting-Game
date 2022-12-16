@@ -97,9 +97,14 @@ function animate() {
             enemy2.attack.ing = true;
         }
 
-    player.update();
-    enemy1.update();
-    enemy2.update();
+    player.draw();
+    enemy1.draw();
+    enemy2.draw();
+
+
+    player.attacking();
+    enemy1.attacking();
+    enemy2.attacking();
 
     // to stop the character from moving horizontally and keep on falling/jumping
     player.velocity = {x: 0, y: player.velocity.y};

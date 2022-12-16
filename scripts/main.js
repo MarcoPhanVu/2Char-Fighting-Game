@@ -65,19 +65,19 @@ const enemy2 = new Sprite("enemy2", {
     y: 64
 }, FieryRose, {x: 0, y: -speedY});
 
-function updateLoc(obj) {
+function updateStat(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
 
-    // charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.width}) - ${y + obj.height})`
+    charLocation[index].innerHTML = `(${x} - ${y}) => (${x + obj.width}) - ${y + obj.height})`
 }
 
 function execute() {
     // charState[0].innerHTML = checkCollision(player.attack, enemy2);
-    updateLoc(player.attack, 0);
-    updateLoc(enemy1.attack, 1);
-    updateLoc(enemy2.attack, 2);
-    console.log("player atk: ", player.attack.pos);
+    updateStat(player.attack, 0);
+    updateStat(enemy1.attack, 1);
+    updateStat(enemy2.attack, 2);
+    // console.log("player atk: ", player.attack.pos);
     animate();
 }
 
