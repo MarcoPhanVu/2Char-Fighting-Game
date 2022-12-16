@@ -4,13 +4,7 @@ class Sprite {
         this.pos = position;
         this.look = appearance;
         this.velocity = velocity;
-// SHIT, I WAS MAKING CHANGES ON AN INCORRECT BRANCHHHHHHH!
-// I'll leave this for my future self to fix
 
-// Me - future self: fuck you, past me, still unable to fix this. You should've went to sleep earlier instead of making these changes on the WRONG BRANCH!!!
-
-// Update: Fixed, not so hard, isn't it? took me quite sometime.
-// Gotta learn advance git for future cooperating with my colleagues
         this.width = 40;
         this.height = 80;
 
@@ -41,10 +35,10 @@ class Sprite {
 
         if (this.attack.ing == true) { // Dynamic name
             con.fillStyle = CaribeanGreen;
-            // debugger
             if (this.attack.direction == "toRight") {
                 con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             } 
+
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
                 con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
@@ -56,13 +50,7 @@ class Sprite {
 
             setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
-            }, 200)
-
-            // setTimeout(() => {
-            //     let i = 0;
-            //     charState[1].innerHTML = "nothing yet";
-            // }, 1000)
-            
+            }, 200)         
 
             // setTimeout(() => {
             //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
