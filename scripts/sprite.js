@@ -25,7 +25,7 @@ class Sprite {
     }
 
 
-    draw() {
+    drawChar() {
         // Sprite
         if (this.inAir) {
             this.velocity.y += gravity;
@@ -47,7 +47,7 @@ class Sprite {
 
 
     
-    attacking() {
+    drawAttack() {
         this.attack.pos.x = this.pos.x + this.width;
         this.attack.pos.y = this.pos.y + this.height/2;
 
@@ -60,7 +60,6 @@ class Sprite {
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
                 con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
-                charState
             }
             
             setTimeout(() => { 
@@ -87,7 +86,7 @@ class Sprite {
 
 
     //     this.draw();
-    //     this.attacking();
+    //     this.drawAttack();
     // }
 
     jump() {
