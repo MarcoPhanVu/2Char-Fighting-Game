@@ -1,0 +1,2 @@
+- currently unable to determine the LOCATION of the attack and when will it'll hit a target.
+- for now, it is TRUE everywhere

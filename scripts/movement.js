@@ -17,14 +17,16 @@ function keepInside(obj) {
 }
 
 function checkCollision(base, target) {
-    // target on right
     if ( 
-        (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) 
+        (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on right
     ||
-        (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) 
+        (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on left
     ) {
-        return "Target hit";
+        // console.log(`${base.name} hit ${target.name}`)
+        return true;
     }
+
+    return false
 }
 
 
@@ -60,12 +62,10 @@ function animate() {
             // console.log("hey");
         }
 
-        // if (movementState.w_keyPressed) {
-        //     player.pos.y -= 5;
-        // }
-        // if (movementState.s_keyPressed) {
-        //     player.pos.y += 5;
-        // }
+        if (movementState.k_keyPressed == true) {
+            console.log("pressed");
+            debugger;
+        }
 
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
@@ -92,9 +92,13 @@ function animate() {
             enemy2.attack.ing = true;
         }
 
-    player.update();
-    enemy1.update();
-    enemy2.update();
+    player.drawChar();
+    enemy1.drawChar();
+    enemy2.drawChar();
+
+    player.drawAttack();
+    enemy1.drawAttack();
+    enemy2.drawAttack();
 
     // to stop the character from moving horizontally and keep on falling/jumping
     player.velocity = {x: 0, y: player.velocity.y};
