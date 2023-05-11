@@ -47,24 +47,29 @@ cvs.fillRect(0, 0, display.width, display.height);
 // BACKGROUND END
 
 
+// INITIAL VALUES
+let speedX = 8;
+let speedY = 20;
+
+
 // INITIAL ENTITIES
 const player = new Sprite("player", //Name
     {x: 300, y: 80},                //Position
     Celadon,                        //Appearance
     500,                            //Hitpoints
-    {x: 0, y: -speedY});            //Iniita Velocity
+    {x: 0, y: speedY});            //Iniital Velocity
 
 const enemy1 = new Sprite("enemy1", 
-    {x: 560, y: 200}, 
+    {x: 120, y: 60}, 
     ParadisePink, 
     800, 
-    {x: 0, y: -speedY});
+    {x: 0, y: speedY});
 
 const enemy2 = new Sprite("enemy2", 
-    {x: 120, y: 64}, 
+    {x: 560, y: 200}, 
     FieryRose, 
     1000,
-    {x: 0, y: -speedY});
+    {x: 0, y: speedY});
 
 
 
@@ -91,5 +96,5 @@ function execute() {
     animate();
 }
 
-interval500 = setInterval(execute, 20);
+interval500 = setInterval(execute, 200);
 

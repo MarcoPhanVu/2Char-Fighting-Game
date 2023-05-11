@@ -72,10 +72,21 @@ class Sprite {
             setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
             }, 200)  
-            dataState[1].innerHTML = `Enemy1 ${checkCollision(this.attack, enemy1)}`;
-            dataState[2].innerHTML = `Enemy2 ${checkCollision(this.attack, enemy2)}`;
-        }
 
+            //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
+            if (this == player) {
+                dataState[0].innerHTML = `${checkCollision(this.attack, enemy1)}`; 
+                dataState[1].innerHTML = `${checkCollision(this.attack, enemy2)}`;
+            }
+
+            else if (this == enemy1) {
+                dataState[3].innerHTML = `${checkCollision(enemy1.attack, player)}`; 
+            }
+
+            else if (this == enemy2) {
+                dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
+            }
+        }
     }
     
     // update() {
@@ -86,7 +97,7 @@ class Sprite {
     //     this.pos.x += this.velocity.x;
     //     this.pos.y += this.velocity.y;
         
-    //     keepInside(this); // has to be above oso that attack won't "bounce"
+    //     keepInside(this); // has to be above so that attack won't "bounce"
 
     //     this.attack.pos.x = this.pos.x + this.width;
     //     this.attack.pos.y = this.pos.y + this.height/2;

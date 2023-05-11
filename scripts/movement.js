@@ -18,32 +18,25 @@ function keepInside(obj) {
 
 function checkCollision(base, target) {
     // if ( 
-    //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on right
+    //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on left
     // ||
-    //     (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on left
+    //     (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on right
     // ) {
     //     // console.log(`${base.name} hit ${target.name}`)
     //     return true;
     // }
 
-    if (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) { // target on right 
-        // console.log(`${base.name} hit ${target.name} on right`);
-        return "hit right";
-    }
-    
-    else if (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) {// target on left
-        // console.log(`${base.name} hit ${target.name} on left`);
-        return "hit left";
+    if ((base.pos.x <= target.pos.x && target.pos.x <= base.pos.x + base.width) ||
+        (base.pos.x <= target.pos.x + target.width && target.pos.x + target.width <= base.pos.x + base.width)) {
+        return `${base.name} hit ${target.name} on ${base.direction}`;
     }
 
-    return "no hit";d
+
+    return "no hit";
 }
 
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
-
-let speedX = 8;
-let speedY = 20;
 
 function animate() {
     cvs.clearRect(0, 0, display.width, display.height);
