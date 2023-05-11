@@ -17,26 +17,31 @@ function keepInside(obj) {
 }
 
 function checkCollision(base, target) {
-    // target on right
-    if ( 
-        (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) 
-    ||
-        (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) 
-    ) {
-        return "Target hit";
+    // if ( 
+    //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on left
+    // ||
+    //     (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on right
+    // ) {
+    //     // console.log(`${base.name} hit ${target.name}`)
+    //     return true;
+    // }
+
+    if ((base.pos.x <= target.pos.x && target.pos.x <= base.pos.x + base.width) ||
+        (base.pos.x <= target.pos.x + target.width && target.pos.x + target.width <= base.pos.x + base.width)) {
+        return `${base.name} hit ${target.name} on ${base.direction}`;
     }
+
+
+    return "no hit";
 }
 
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
-let speedX = 8;
-let speedY = 20;
-
 function animate() {
-    con.clearRect(0, 0, display.width, display.height);
-    con.fillStyle = FeldGrau;
-    con.fillRect(0, 0, display.width, display.height);
+    cvs.clearRect(0, 0, display.width, display.height);
+    cvs.fillStyle = FeldGrau;
+    cvs.fillRect(0, 0, display.width, display.height);
 
 // Movement
     //Avoid using elseif because we need to be able to use multiple keys at once
@@ -51,21 +56,20 @@ function animate() {
             player.attack.direction = "toLeft";
         }
 
-        if (movementState.w_keyPressed == true && player.inAir == false) {
+        if (movementState.w_keyPressed == true && player.inAir == false) { //Jump
             player.jump();
             movementState.w_keyPressed = false;
         }
-        if (movementState.spacebar_keyPressed == true) {
+
+        if (movementState.spacebar_keyPressed == true) { // Player attack
             player.attack.ing = true;
             // console.log("hey");
         }
 
-        // if (movementState.w_keyPressed) {
-        //     player.pos.y -= 5;
-        // }
-        // if (movementState.s_keyPressed) {
-        //     player.pos.y += 5;
-        // }
+        if (movementState.k_keyPressed == true) {
+            console.log("pressed");
+            debugger;
+        }
 
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
@@ -92,9 +96,13 @@ function animate() {
             enemy2.attack.ing = true;
         }
 
-    player.update();
-    enemy1.update();
-    enemy2.update();
+    player.drawChar();
+    enemy1.drawChar();
+    enemy2.drawChar();
+
+    player.drawAttack();
+    enemy1.drawAttack();
+    enemy2.drawAttack();
 
     // to stop the character from moving horizontally and keep on falling/jumping
     player.velocity = {x: 0, y: player.velocity.y};
