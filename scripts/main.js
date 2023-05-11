@@ -1,5 +1,5 @@
-const display = document.querySelector("#main-display");
-const con = display.getContext("2d");
+const display = document.querySelector("#game-display");
+const cvs = display.getContext("2d");
 let screenRatio = 0.6;
 display.width = 960 * screenRatio;
 display.height = 480 * screenRatio;
@@ -10,11 +10,8 @@ const charState = document.querySelectorAll("[char-state]");
 const charLocation = document.querySelectorAll("[char-location]");
 const charExtInfo = document.querySelectorAll("[char-extra-in4]");
 
-const colorDisplayer = document.querySelectorAll(".color-displayer");
-colorDisplayer[0].innerHTML = "okay this works";
-
-const para = document.createElement("p");
-
+// const colorDisplayer = document.querySelectorAll(".color-displayer");
+// colorDisplayer[0].innerHTML = "Color DIsplayer";
 
 // COLORS START
     // Normal
@@ -44,8 +41,8 @@ const para = document.createElement("p");
 
 
 // BACKGROUND START
-con.fillStyle = FeldGrau;
-con.fillRect(0, 0, display.width, display.height);
+cvs.fillStyle = Xanadu;
+cvs.fillRect(0, 0, display.width, display.height);
 // BACKGROUND END
 
 
@@ -64,6 +61,11 @@ const enemy2 = new Sprite("enemy2", {
     x: 120,
     y: 64
 }, FieryRose, 1000,{x: 0, y: -speedY});
+
+
+// error this so future me can see
+// painter.fillStyle = "#E94F37";
+// painter.fillText("Ah, you're dead.", paddleX-padHeight, paddleY-padHeight);
 
 function updateStat(obj, index) {
     let x = Math.round(obj.pos.x);
