@@ -45,11 +45,6 @@ class Sprite {
 
 
         keepInside(this);
-
-        // setTimeout(() => {
-        //     dataState[`${this.name}`].attacking = false; // to stop char from attacking for ever
-        // }, 200)
-        
     }
 
 
@@ -69,23 +64,35 @@ class Sprite {
                 cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             }
             
-            setTimeout(() => { 
-                this.attack.ing = false; // to stop char from attacking for ever
-            }, 200)  
+            this.attack.ing = false; 
 
-            //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
             if (this == player) {
-                dataState[0].innerHTML = `${checkCollision(this.attack, enemy1)}`; 
-                dataState[1].innerHTML = `${checkCollision(this.attack, enemy2)}`;
+                checkAttack(this, enemy1);
+                checkAttack(this, enemy2);
             }
 
             else if (this == enemy1) {
-                dataState[3].innerHTML = `${checkCollision(enemy1.attack, player)}`; 
+                checkAttack(this, player); 
             }
 
             else if (this == enemy2) {
-                dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
+                checkAttack(this, player); 
             }
+
+
+            //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
+            // if (this == player) {
+            //     dataState[0].innerHTML = `${checkCollision(this.attack, enemy1)}`; 
+            //     dataState[1].innerHTML = `${checkCollision(this.attack, enemy2)}`;
+            // }
+
+            // else if (this == enemy1) {
+            //     dataState[3].innerHTML = `${checkCollision(enemy1.attack, player)}`; 
+            // }
+
+            // else if (this == enemy2) {
+            //     dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
+            // }
         }
     }
     

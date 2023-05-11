@@ -16,6 +16,15 @@ function keepInside(obj) {
     }
 }
 
+function checkAttack(charA, charB) {
+    let attack = charA.attack;
+
+    if ((attack.pos.x <= charB.pos.x && charB.pos.x <= attack.pos.x + attack.width) ||
+    (attack.pos.x <= charB.pos.x + charB.width && charB.pos.x + charB.width <= attack.pos.x + attack.width)) {
+        charB.hp -= 150;
+    }
+}
+
 function checkCollision(base, target) {
     // if ( 
     //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on left

@@ -1,15 +1,18 @@
+// Main Canvas
 const display = document.querySelector("#game-display");
 const cvs = display.getContext("2d");
 let screenRatio = 0.6;
 display.width = 1200 * screenRatio;
 display.height = 800 * screenRatio;
-// Main Canvas
 
-// Extra Information
+
+// For report
 const dataName = document.querySelectorAll("[value-data-name]");
 const dataState = document.querySelectorAll("[value-data-state]");
 const dataLocation = document.querySelectorAll("[value-data-location]");
 const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
+
+
 
 // const colorDisplayer = document.querySelectorAll(".color-displayer");
 // colorDisplayer[0].innerHTML = "Color DIsplayer";
@@ -39,38 +42,48 @@ const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
     FloralWhite = "#FFF9EC"
 // COLORS END
 
-
-
 // BACKGROUND START
 cvs.fillStyle = Xanadu;
 cvs.fillRect(0, 0, display.width, display.height);
-// BACKGROUND END
 
 
 // INITIAL VALUES
 let speedX = 8;
 let speedY = 20;
 
+let initplayerHP = 750;
+let initenemyHP = 900;
+
+let playerHP = 750;
+let enemyHP = 900;
+
 
 // INITIAL ENTITIES
 const player = new Sprite("player", //Name
     {x: 300, y: 80},                //Position
     Celadon,                        //Appearance
-    500,                            //Hitpoints
+    playerHP-300,                            //Hitpoints
     {x: 0, y: speedY});            //Iniital Velocity
 
 const enemy1 = new Sprite("enemy1", 
     {x: 120, y: 60}, 
     ParadisePink, 
-    800, 
+    enemyHP, 
     {x: 0, y: speedY});
 
 const enemy2 = new Sprite("enemy2", 
     {x: 560, y: 200}, 
     FieryRose, 
-    1000,
+    enemyHP-500,
     {x: 0, y: speedY});
 
+
+
+const playerHealthIndicator = document.getElementById('player-health');
+const enemyHealthIndicator = document.getElementById('enemy-health');
+
+playerHealthIndicator.innerHTML = player.hp;
+enemyHealthIndicator.innerHTML = enemy1.hp + enemy2.hp;
 
 
 
@@ -79,10 +92,18 @@ function updateStat(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
 
-    // dataLocation[index].innerHTML = `${obj.name} : ${obj.hp}`;
+    dataState[index].innerHTML = `${obj.name} : ${obj.hp}HP`;
     // dataLocation[index].innerHTML = `(${x}-${y}) >>> (${x + obj.width})-${y + obj.height})`
-
     dataLocation[index].innerHTML = `(${x}) - (${x + obj.width})`
+
+    let playerHealth = `${Math.round((player.hp/playerHP) * 100)}%`;
+    // console.log(playerHealth);
+    playerHealthIndicator.style.width = playerHealth;
+
+    let enemyHealth = `${Math.round((enemy1.hp + enemy2.hp) / (enemyHP*2) * 100)}%`;
+    console.log(enemyHealth);
+    enemyHealthIndicator.style.width = enemyHealth;
+    error this always return 6%?????
 }
 
 function execute() {
@@ -96,5 +117,38 @@ function execute() {
     animate();
 }
 
-interval500 = setInterval(execute, 200);
+interval500 = setInterval(execute, 20);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
