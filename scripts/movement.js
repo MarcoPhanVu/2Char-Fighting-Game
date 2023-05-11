@@ -17,16 +17,26 @@ function keepInside(obj) {
 }
 
 function checkCollision(base, target) {
-    if ( 
-        (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on right
-    ||
-        (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on left
-    ) {
-        // console.log(`${base.name} hit ${target.name}`)
-        return true;
+    // if ( 
+    //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on right
+    // ||
+    //     (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on left
+    // ) {
+    //     // console.log(`${base.name} hit ${target.name}`)
+    //     return true;
+    // }
+
+    if (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) { // target on right 
+        // console.log(`${base.name} hit ${target.name} on right`);
+        return "hit right";
+    }
+    
+    else if (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) {// target on left
+        // console.log(`${base.name} hit ${target.name} on left`);
+        return "hit left";
     }
 
-    return false
+    return "no hit";d
 }
 
 
@@ -36,9 +46,9 @@ let speedX = 8;
 let speedY = 20;
 
 function animate() {
-    con.clearRect(0, 0, display.width, display.height);
-    con.fillStyle = FeldGrau;
-    con.fillRect(0, 0, display.width, display.height);
+    cvs.clearRect(0, 0, display.width, display.height);
+    cvs.fillStyle = FeldGrau;
+    cvs.fillRect(0, 0, display.width, display.height);
 
 // Movement
     //Avoid using elseif because we need to be able to use multiple keys at once
@@ -53,11 +63,12 @@ function animate() {
             player.attack.direction = "toLeft";
         }
 
-        if (movementState.w_keyPressed == true && player.inAir == false) {
+        if (movementState.w_keyPressed == true && player.inAir == false) { //Jump
             player.jump();
             movementState.w_keyPressed = false;
         }
-        if (movementState.spacebar_keyPressed == true) {
+
+        if (movementState.spacebar_keyPressed == true) { // Player attack
             player.attack.ing = true;
             // console.log("hey");
         }

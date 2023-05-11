@@ -10,6 +10,7 @@ class Sprite {
         this.height = 80;
 
         this.attack = {
+            name: `${this.name}'s attack`,
             ing: false,
             direction: "toRight",
             pos: {
@@ -34,13 +35,19 @@ class Sprite {
         this.pos.x += this.velocity.x;
         this.pos.y += this.velocity.y;
 
-        con.fillStyle = this.look;
-        con.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+        cvs.fillStyle = this.look;
+        cvs.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+
+        // error this so future me can see
+        cvs.font = "30px Nunito";
+        cvs.fillStyle = this.appearance;
+        cvs.fillText(`${this.name}`, this.pos.x - this.width/2, this.pos.y - 15);
+
 
         keepInside(this);
 
         // setTimeout(() => {
-        //     charState[`${this.name}`].attacking = false; // to stop char from attacking for ever
+        //     dataState[`${this.name}`].attacking = false; // to stop char from attacking for ever
         // }, 200)
         
     }
@@ -48,27 +55,27 @@ class Sprite {
 
     
     drawAttack() {
-        this.attack.pos.x = this.pos.x + this.width;
+        this.attack.pos.x = this.pos.x + this.width; //start 
         this.attack.pos.y = this.pos.y + this.height/2;
 
         if (this.attack.ing == true) { // Dynamic name
-            con.fillStyle = CaribeanGreen;
+            cvs.fillStyle = CaribeanGreen;
             if (this.attack.direction == "toRight") {
-                con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
+                cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             } 
 
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
-                con.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
+                cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             }
             
             setTimeout(() => { 
                 this.attack.ing = false; // to stop char from attacking for ever
             }, 200)  
+            dataState[1].innerHTML = `Enemy1 ${checkCollision(this.attack, enemy1)}`;
+            dataState[2].innerHTML = `Enemy2 ${checkCollision(this.attack, enemy2)}`;
         }
 
-        charState[1].innerHTML = `Enemy1 ${checkCollision(this.attack, enemy1)}`;
-        charState[2].innerHTML = `Enemy2 ${checkCollision(this.attack, enemy2)}`;
     }
     
     // update() {
