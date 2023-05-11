@@ -1,20 +1,18 @@
-const display = document.querySelector("#main-display");
-const con = display.getContext("2d");
+const display = document.querySelector("#game-display");
+const cvs = display.getContext("2d");
 let screenRatio = 0.6;
-display.width = 960 * screenRatio;
-display.height = 480 * screenRatio;
+display.width = 1200 * screenRatio;
+display.height = 800 * screenRatio;
 // Main Canvas
 
 // Extra Information
-const charState = document.querySelectorAll("[char-state]");
-const charLocation = document.querySelectorAll("[char-location]");
-const charExtInfo = document.querySelectorAll("[char-extra-in4]");
+const dataName = document.querySelectorAll("[value-data-name]");
+const dataState = document.querySelectorAll("[value-data-state]");
+const dataLocation = document.querySelectorAll("[value-data-location]");
+const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
 
-const colorDisplayer = document.querySelectorAll(".color-displayer");
-colorDisplayer[0].innerHTML = "okay this works";
-
-const para = document.createElement("p");
-
+// const colorDisplayer = document.querySelectorAll(".color-displayer");
+// colorDisplayer[0].innerHTML = "Color DIsplayer";
 
 // COLORS START
     // Normal
@@ -44,42 +42,59 @@ const para = document.createElement("p");
 
 
 // BACKGROUND START
-con.fillStyle = FeldGrau;
-con.fillRect(0, 0, display.width, display.height);
+cvs.fillStyle = Xanadu;
+cvs.fillRect(0, 0, display.width, display.height);
 // BACKGROUND END
 
 
+// INITIAL VALUES
+let speedX = 8;
+let speedY = 20;
 
-const player = new Sprite("player", {
-    x: 300,
-    y: 80
-}, Celadon, 500, {x: 0, y: -speedY});
 
-const enemy1 = new Sprite("enemy1", {
-    x: 560,
-    y: 200
-}, ParadisePink, 800, {x: 0, y: -speedY});
+// INITIAL ENTITIES
+const player = new Sprite("player", //Name
+    {x: 300, y: 80},                //Position
+    Celadon,                        //Appearance
+    500,                            //Hitpoints
+    {x: 0, y: speedY});            //Iniital Velocity
 
-const enemy2 = new Sprite("enemy2", {
-    x: 120,
-    y: 64
-}, FieryRose, 1000,{x: 0, y: -speedY});
+const enemy1 = new Sprite("enemy1", 
+    {x: 120, y: 60}, 
+    ParadisePink, 
+    800, 
+    {x: 0, y: speedY});
 
+const enemy2 = new Sprite("enemy2", 
+    {x: 560, y: 200}, 
+    FieryRose, 
+    1000,
+    {x: 0, y: speedY});
+
+
+
+
+    
 function updateStat(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
 
-    // charLocation[index].innerHTML = `${obj.name} : ${obj.hp}`;
-    charLocation[index].innerHTML = `(${x} - ${y}) ==>> (${x + obj.width}) - ${y + obj.height})`
+    // dataLocation[index].innerHTML = `${obj.name} : ${obj.hp}`;
+    // dataLocation[index].innerHTML = `(${x}-${y}) >>> (${x + obj.width})-${y + obj.height})`
+
+    dataLocation[index].innerHTML = `(${x}) - (${x + obj.width})`
 }
 
 function execute() {
-    // charState[0].innerHTML = (player.attack, enemy2);
-    updateStat(player, 0);
-    updateStat(enemy1, 1);
-    updateStat(enemy2, 2);
+    updateStat(player, 0);    
+    updateStat(player.attack, 01);
+    updateStat(enemy1, 2);    
+    updateStat(enemy1.attack, 3);
+    updateStat(enemy2, 4);    
+    updateStat(enemy2.attack, 5);
     // console.log("player atk: ", player.attack.pos);
     animate();
 }
 
-interval500 = setInterval(execute, 20);
+interval500 = setInterval(execute, 200);
+

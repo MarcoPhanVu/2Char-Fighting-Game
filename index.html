@@ -10,41 +10,52 @@
     <link rel="stylesheet" type ="text/css" href="styles/styles.css">
 </head>
 <body>
-    <canvas id="main-display"></canvas>
+    <canvas id="game-display"></canvas>
 
-    <table class="reporter">
-        <caption>Game stats for further testing</caption>
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">State</th>
-                <th scope="col">Location</th>
-                <th scope="col">Extra info</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">Player</th>
-                <td char-state>Player State</td>
-                <td char-location>Enemy1 State</td>
-                <td char-extra-in4>Enemy2 State</td>
-            </tr>
-            <tr>
-                <th scope="row">Enemy1</th>
-                <td char-state>Enemy1 State</td>
-                <td char-location>Place holder</td>
-                <td char-extra-in4>placeholder</td>
-            </tr>
-            <tr>
-                <th scope="row">Enemy2</th>
-                <td char-state>Enemy2 State</td>
-                <td char-location>placeholder</td>
-                <td char-extra-in4>placeholder</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="new-reporter">
+        <div class="value-column">
+            <div class="category">Name</div>
 
-    <div class="color-displayer">Something</div>
+            <div class="value-data-name" value-data-name>P</div>
+            <div class="value-data-name" value-data-name>P Atk</div>
+            <div class="value-data-name" value-data-name>E1</div>
+            <div class="value-data-name" value-data-name>E1 Atk</div>
+            <div class="value-data-name" value-data-name>E2</div>
+            <div class="value-data-name" value-data-name>E2 Atk</div>
+        </div>
+        <div class="value-column">
+            <div class="category">State</div>
+
+            <div class="value-data" value-data-state>blank</div>
+            <div class="value-data" value-data-state>blank</div>
+            <div class="value-data" value-data-state>blank</div>
+            <div class="value-data" value-data-state>blank</div>
+            <div class="value-data" value-data-state>blank</div>
+            <div class="value-data" value-data-state>blank</div>
+        </div>
+        <div class="value-column">
+            <div class="category">Location</div>
+
+            <div class="value-data" value-data-location>blank</div>
+            <div class="value-data" value-data-location>blank</div>
+            <div class="value-data" value-data-location>blank</div>
+            <div class="value-data" value-data-location>blank</div>
+            <div class="value-data" value-data-location>blank</div>
+            <div class="value-data" value-data-location>blank</div>
+        </div>
+        <div class="value-column">
+            <div class="category">ExtraIn4</div>
+
+            <div class="value-data" value-data-extra-info>blank</div>
+            <div class="value-data" value-data-extra-info>blank</div>
+            <div class="value-data" value-data-extra-info>blank</div>
+            <div class="value-data" value-data-extra-info>blank</div>
+            <div class="value-data" value-data-extra-info>blank</div>
+            <div class="value-data" value-data-extra-info>blank</div>
+        </div>
+    </div>
+
+    <!-- <div class="color-displayer">Color Displayer</div> -->
 
     <!-- Script -->
     <script src="scripts/sprite.js"></script>
