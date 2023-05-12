@@ -67,7 +67,7 @@ const player = new Sprite("player", //Name
     playerHP,                            //Hitpoints
     {x: 0, y: speedY});            //Iniital Velocity
 
-const enemy1 = new Sprite("enemy1", 
+const enemy = new Sprite("enemy", 
     {x: 120, y: 60}, 
     ParadisePink, 
     enemyHP, 
@@ -89,7 +89,7 @@ const gameStat = document.getElementById('game-status');
 const nextBtn = document.getElementById('next-btn');
 
 playerHealthIndicator.innerHTML = player.hp;
-enemyHealthIndicator.innerHTML = enemy1.hp + enemy2.hp;
+enemyHealthIndicator.innerHTML = enemy.hp;
 timer.innerHTML = time;
 
 function decreaseTimer() {
@@ -107,13 +107,11 @@ function decreaseTimer() {
 
 function displayerGameState() {
     overlay.classList.remove("hidden");
-    let enemyHealth = enemy1.hp + enemy2.hp;
-    console.log(enemyHealth);
-    if (player.hp == enemyHealth) {
+    if (player.hp == enemy.hp) {
         gameStat.innerHTML = "TIE";
-    } else if (player.hp > enemyHealth) {
+    } else if (player.hp > enemy.hp) {
         gameStat.innerHTML = "Player win";
-    } else if (player.hp < enemyHealth) {
+    } else if (player.hp < enemy.hp) {
         gameStat.innerHTML = "Enemy win";
     }
 }
@@ -134,7 +132,8 @@ function updateStat(obj, index) {
     playerHealthIndicator.style.width = `${playerHealth}%`;
     playerHealthIndicator.innerHTML = `${playerHealth}%`;
 
-    let enemyHealth = Math.round((enemy1.hp + enemy2.hp)/(enemyHP*2) * 100);
+    let enemyHealth = Math.round((enemy.hp/playerHP) * 100);
+
     if (enemyHealth <= 0) {
         enemyHealth = 0;
     }
@@ -146,10 +145,8 @@ function updateStat(obj, index) {
 function execute() {
     updateStat(player, 0);    
     updateStat(player.attack, 01);
-    updateStat(enemy1, 2);    
-    updateStat(enemy1.attack, 3);
-    updateStat(enemy2, 4);    
-    updateStat(enemy2.attack, 5);
+    updateStat(enemy, 2);    
+    updateStat(enemy.attack, 3);
     // console.log("player atk: ", player.attack.pos);
     animate();
 }
