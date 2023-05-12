@@ -21,7 +21,7 @@ function checkAttack(charA, charB) {
 
     if ((attack.pos.x <= charB.pos.x && charB.pos.x <= attack.pos.x + attack.width) ||
     (attack.pos.x <= charB.pos.x + charB.width && charB.pos.x + charB.width <= attack.pos.x + attack.width)) {
-        charB.hp -= 150;
+        charB.hp -= 50;
     }
 }
 
@@ -71,8 +71,8 @@ function animate() {
         }
 
         if (movementState.spacebar_keyPressed == true) { // Player attack
-            player.attack.ing = true;
-            // console.log("hey");
+            // player.attack.ing = true;
+            player.drawAttack();
         }
 
         if (movementState.k_keyPressed == true) {
@@ -101,17 +101,13 @@ function animate() {
             movementState.arrowup_keyPressed = false;
         }
         if (movementState.shift_keyPressed == true) {
-            enemy1.attack.ing = true;
-            enemy2.attack.ing = true;
+            enemy1.drawAttack();
+            enemy2.drawAttack();
         }
 
     player.drawChar();
     enemy1.drawChar();
     enemy2.drawChar();
-
-    player.drawAttack();
-    enemy1.drawAttack();
-    enemy2.drawAttack();
 
     // to stop the character from moving horizontally and keep on falling/jumping
     player.velocity = {x: 0, y: player.velocity.y};

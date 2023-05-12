@@ -17,8 +17,9 @@ class Sprite {
                 x: this.pos.x,
                 y: this.pos.y
             },
-            width: 60,
-            height: 20
+            width: 80,
+            height: 40,
+            availForAttack: true
         }
 
         // States
@@ -50,22 +51,22 @@ class Sprite {
 
     
     drawAttack() {
-        this.attack.pos.x = this.pos.x + this.width; //start 
-        this.attack.pos.y = this.pos.y + this.height/2;
-
-        if (this.attack.ing == true) { // Dynamic name
+        
+        
+        dataExtraInfo[0].innerHTML = "avail: " + this.attack.availForAttack;
+        if (this.attack.availForAttack == true) {
+            this.attack.pos.x = this.pos.x + this.width; //start 
+            this.attack.pos.y = this.pos.y + this.height/2;
+    
             cvs.fillStyle = CaribeanGreen;
             if (this.attack.direction == "toRight") {
                 cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             } 
-
+    
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
                 cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             }
-            
-            this.attack.ing = false; 
-
             if (this == player) {
                 checkAttack(this, enemy1);
                 checkAttack(this, enemy2);
@@ -78,6 +79,21 @@ class Sprite {
             else if (this == enemy2) {
                 checkAttack(this, player); 
             }
+
+            this.attack.availForAttack = false;
+
+            setTimeout(() => {
+                this.attack.availForAttack = true;
+                console.log("Avail")
+            }, 200)
+        }
+        
+        // this.attack.ing = false;
+
+        // setTimeout(() => {
+        //     this.attack.ing = true;
+        //     console.log("true")
+        // }, 750)
 
 
             //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
@@ -93,7 +109,7 @@ class Sprite {
             // else if (this == enemy2) {
             //     dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
             // }
-        }
+
     }
     
     // update() {

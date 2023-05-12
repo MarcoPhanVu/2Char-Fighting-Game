@@ -78,14 +78,13 @@ const enemy2 = new Sprite("enemy2",
     {x: 0, y: speedY});
 
 
-
+// User Interface
+const timer = document.getElementById("timer");
 const playerHealthIndicator = document.getElementById('player-health');
 const enemyHealthIndicator = document.getElementById('enemy-health');
 
 playerHealthIndicator.innerHTML = player.hp;
 enemyHealthIndicator.innerHTML = enemy1.hp + enemy2.hp;
-
-
 
     
 function updateStat(obj, index) {
