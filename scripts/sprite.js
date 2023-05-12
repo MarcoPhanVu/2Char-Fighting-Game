@@ -84,7 +84,7 @@ class Sprite {
 
             setTimeout(() => {
                 this.attack.availForAttack = true;
-                console.log("Avail")
+                // console.log("Avail")
             }, 200)
         }
         
@@ -111,24 +111,6 @@ class Sprite {
             // }
 
     }
-    
-    // update() {
-    //     if (this.inAir) {
-    //         this.velocity.y += gravity;
-    //     }
-
-    //     this.pos.x += this.velocity.x;
-    //     this.pos.y += this.velocity.y;
-        
-    //     keepInside(this); // has to be above so that attack won't "bounce"
-
-    //     this.attack.pos.x = this.pos.x + this.width;
-    //     this.attack.pos.y = this.pos.y + this.height/2;
-
-
-    //     this.draw();
-    //     this.drawAttack();
-    // }
 
     jump() {
         this.velocity.y = -speedY;

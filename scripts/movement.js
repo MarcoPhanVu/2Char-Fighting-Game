@@ -48,6 +48,11 @@ function checkCollision(base, target) {
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
 function animate() {
+    if (gameOver == true) {
+        displayerGameState();
+        return;
+    }
+
     cvs.clearRect(0, 0, display.width, display.height);
     cvs.fillStyle = FeldGrau;
     cvs.fillRect(0, 0, display.width, display.height);
@@ -109,13 +114,12 @@ function animate() {
     enemy1.drawChar();
     enemy2.drawChar();
 
-    // to stop the character from moving horizontally and keep on falling/jumping
+    // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};
     enemy1.velocity = {x: 0, y: enemy1.velocity.y};
     enemy2.velocity = {x: 0, y: enemy2.velocity.y};
 }
 
-// let keyStrokes = {}
 
 document.addEventListener("keydown", (event) => {
     let key = event.key;

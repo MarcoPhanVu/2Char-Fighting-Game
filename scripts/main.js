@@ -57,12 +57,14 @@ let initenemyHP = 900;
 let playerHP = 750;
 let enemyHP = 900;
 
+let time = 4;
+let gameOver = false;
 
 // INITIAL ENTITIES
 const player = new Sprite("player", //Name
     {x: 300, y: 80},                //Position
     Celadon,                        //Appearance
-    playerHP-300,                            //Hitpoints
+    playerHP,                            //Hitpoints
     {x: 0, y: speedY});            //Iniital Velocity
 
 const enemy1 = new Sprite("enemy1", 
@@ -82,11 +84,40 @@ const enemy2 = new Sprite("enemy2",
 const timer = document.getElementById("timer");
 const playerHealthIndicator = document.getElementById('player-health');
 const enemyHealthIndicator = document.getElementById('enemy-health');
+const overlay = document.getElementById('overlay');
+const gameStat = document.getElementById('game-status');
+const nextBtn = document.getElementById('next-btn');
 
 playerHealthIndicator.innerHTML = player.hp;
 enemyHealthIndicator.innerHTML = enemy1.hp + enemy2.hp;
+timer.innerHTML = time;
 
-    
+function decreaseTimer() {
+    setTimeout(decreaseTimer, 1000);
+    timer.innerHTML = time;
+    if (time >= 0) {
+        --time;
+    }
+
+    if (time < 0) {
+        timer.innerHTML = 0;
+        gameOver = true;
+    }
+}
+
+function displayerGameState() {
+    overlay.classList.remove("hidden");
+    let enemyHealth = enemy1.hp + enemy2.hp;
+    console.log(enemyHealth);
+    if (player.hp == enemyHealth) {
+        gameStat.innerHTML = "TIE";
+    } else if (player.hp > enemyHealth) {
+        gameStat.innerHTML = "Player win";
+    } else if (player.hp < enemyHealth) {
+        gameStat.innerHTML = "Enemy win";
+    }
+}
+
 function updateStat(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
@@ -122,6 +153,8 @@ function execute() {
     // console.log("player atk: ", player.attack.pos);
     animate();
 }
+
+decreaseTimer();
 
 interval500 = setInterval(execute, 20);
 

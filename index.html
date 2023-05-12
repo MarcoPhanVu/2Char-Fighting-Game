@@ -12,15 +12,23 @@
 <body>
     <div id="game-container">
         <div id="status-bar">
-    <div class="health-bar" style="justify-content: flex-end;">
+            <div class="health-bar" style="justify-content: flex-end;">
                 <div id="player-health"></div>
             </div>
-            <div class="timer">36</div>
+
+            <div id="timer">36</div>
+
             <div class="health-bar">
                 <div id="enemy-health"></div>
             </div>
         </div>
-
+        <div id="overlay" class="hidden">
+            <div class="overlay-inside">
+            
+                <div id="game-status">T</div>
+                <button id="next-btn">NEXT</button>
+            </div>
+        </div>
         <canvas id="game-display"></canvas>
     </div>
 
@@ -68,7 +76,7 @@
     </div>
 
     <div class="test-div">
-        <div class="test-div-inside"></div>
+        <div class="test-div-inside">Cây lau nhà</div>
     </div>
 
     <!-- <div class="color-displayer">Color Displayer</div> -->
