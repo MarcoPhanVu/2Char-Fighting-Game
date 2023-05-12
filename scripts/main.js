@@ -96,14 +96,21 @@ function updateStat(obj, index) {
     // dataLocation[index].innerHTML = `(${x}-${y}) >>> (${x + obj.width})-${y + obj.height})`
     dataLocation[index].innerHTML = `(${x}) - (${x + obj.width})`
 
-    let playerHealth = `${Math.round((player.hp/playerHP) * 100)}%`;
+    let playerHealth = Math.round((player.hp/playerHP) * 100);
+    if (playerHealth <= 0) {
+        playerHealth = 0;
+    }
     // console.log(playerHealth);
-    playerHealthIndicator.style.width = playerHealth;
+    playerHealthIndicator.style.width = `${playerHealth}%`;
+    playerHealthIndicator.innerHTML = `${playerHealth}%`;
 
-    let enemyHealth = `${Math.round((enemy1.hp + enemy2.hp) / (enemyHP*2) * 100)}%`;
-    console.log(enemyHealth);
-    enemyHealthIndicator.style.width = enemyHealth;
-    error this always return 6%?????
+    let enemyHealth = Math.round((enemy1.hp + enemy2.hp)/(enemyHP*2) * 100);
+    if (enemyHealth <= 0) {
+        enemyHealth = 0;
+    }
+    // console.log(enemyHealth);
+    enemyHealthIndicator.style.width = `${enemyHealth}%`;
+    enemyHealthIndicator.innerHTML = `${enemyHealth}%`;
 }
 
 function execute() {
