@@ -17,12 +17,31 @@ function keepInside(obj) {
 }
 
 function checkAttack(charA, charB) {
-    let attack = charA.attack;
+    let atkX = charA.attack.pos.x;
+    let atkW = charA.attack.pos.x + charA.attack.width;
+    let atkY = charA.attack.pos.y;
+    let atkH = charA.attack.pos.y - charA.attack.height;
+    let charBX = charB.pos.x;
+    let charBW = charB.pos.x + charB.width;
+    let charBY = charB.pos.y;
+    let charBH = charB.pos.y + charB.height;
 
-    if ((attack.pos.x <= charB.pos.x && charB.pos.x <= attack.pos.x + attack.width) ||
-    (attack.pos.x <= charB.pos.x + charB.width && charB.pos.x + charB.width <= attack.pos.x + attack.width)) {
+    // cvs.fillStyle = "red";
+    // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
+    // debugger;
+
+
+    if  (
+        ((atkX <= charBX && charBX <= atkW) ||
+        (atkX <= charBW && charBW <= atkW))
+    && 
+        (((atkY >= charBY && charBY >= atkH) ||
+        (atkY >= charBH && charBH >= atkH))) // atkH < atkY
+    ) {
         charB.hp -= 50;
+        // debugger;
     }
+    
 }
 
 function checkCollision(base, target) {

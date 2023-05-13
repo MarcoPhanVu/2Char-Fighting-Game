@@ -13,9 +13,9 @@ class Sprite {
             name: `${this.name}'s attack`,
             ing: false,
             direction: "toRight",
-            pos: {
-                x: this.pos.x,
-                y: this.pos.y
+            pos: { //don't modify here because this.x/y will be changed a lot
+                x: 0,
+                y: 0
             },
             width: 80,
             height: 40,
