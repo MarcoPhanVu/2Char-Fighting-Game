@@ -51,8 +51,6 @@ class Sprite {
 
     
     drawAttack() {
-        
-        
         dataExtraInfo[0].innerHTML = "avail: " + this.attack.availForAttack;
         if (this.attack.availForAttack == true) {
             this.attack.pos.x = this.pos.x + this.width; //start 
@@ -68,23 +66,19 @@ class Sprite {
                 cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             }
             if (this == player) {
-                checkAttack(this, enemy1);
-                checkAttack(this, enemy2);
+                checkAttack(this, enemy);
             }
 
-            else if (this == enemy1) {
+            else if (this == enemy) {
                 checkAttack(this, player); 
             }
 
-            else if (this == enemy2) {
-                checkAttack(this, player); 
-            }
 
             this.attack.availForAttack = false;
 
             setTimeout(() => {
                 this.attack.availForAttack = true;
-                console.log("Avail")
+                // console.log("Avail")
             }, 200)
         }
         
@@ -98,37 +92,13 @@ class Sprite {
 
             //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
             // if (this == player) {
-            //     dataState[0].innerHTML = `${checkCollision(this.attack, enemy1)}`; 
-            //     dataState[1].innerHTML = `${checkCollision(this.attack, enemy2)}`;
+            //     dataState[0].innerHTML = `${checkCollision(this.attack, enemy)}`; 
             // }
 
-            // else if (this == enemy1) {
-            //     dataState[3].innerHTML = `${checkCollision(enemy1.attack, player)}`; 
+            // else if (this == enemy) {
+            //     dataState[3].innerHTML = `${checkCollision(enemy.attack, player)}`; 
             // }
-
-            // else if (this == enemy2) {
-            //     dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
-            // }
-
     }
-    
-    // update() {
-    //     if (this.inAir) {
-    //         this.velocity.y += gravity;
-    //     }
-
-    //     this.pos.x += this.velocity.x;
-    //     this.pos.y += this.velocity.y;
-        
-    //     keepInside(this); // has to be above so that attack won't "bounce"
-
-    //     this.attack.pos.x = this.pos.x + this.width;
-    //     this.attack.pos.y = this.pos.y + this.height/2;
-
-
-    //     this.draw();
-    //     this.drawAttack();
-    // }
 
     jump() {
         this.velocity.y = -speedY;

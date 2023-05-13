@@ -67,6 +67,15 @@ function checkCollision(base, target) {
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
 function animate() {
+    if ((player.hp <= 0) || enemy.hp <= 0) {
+        gameOver = true;
+    }
+
+    if (gameOver == true) {
+        displayerGameState();
+        return;
+    }
+
     cvs.clearRect(0, 0, display.width, display.height);
     cvs.fillStyle = FeldGrau;
     cvs.fillRect(0, 0, display.width, display.height);
@@ -101,40 +110,31 @@ function animate() {
 
     // Enemy Section
         if (movementState.arrowright_keyPressed == true) { //Right
-            enemy1.velocity.x = speedX;
-            enemy2.velocity.x = speedX;
-            enemy1.attack.direction = "toRight";
-            enemy2.attack.direction = "toRight";
+            enemy.velocity.x = speedX;
+            enemy.attack.direction = "toRight";
         }
 
         if (movementState.arrowleft_keyPressed == true) { //Left
-            enemy1.velocity.x = -speedX;
-            enemy2.velocity.x = -speedX;
-            enemy1.attack.direction = "toLeft";
-            enemy2.attack.direction = "toLeft";
+            enemy.velocity.x = -speedX;
+            enemy.attack.direction = "toLeft";
         }
 
-        if (movementState.arrowup_keyPressed == true && enemy1.inAir == false && enemy2.inAir == false) {
-            enemy1.jump();
-            enemy2.jump();
+        if (movementState.arrowup_keyPressed == true && enemy.inAir == false) {
+            enemy.jump();
             movementState.arrowup_keyPressed = false;
         }
         if (movementState.shift_keyPressed == true) {
-            enemy1.drawAttack();
-            enemy2.drawAttack();
+            enemy.drawAttack();
         }
 
     player.drawChar();
-    enemy1.drawChar();
-    enemy2.drawChar();
+    enemy.drawChar();
 
-    // to stop the character from moving horizontally and keep on falling/jumping
+    // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};
-    enemy1.velocity = {x: 0, y: enemy1.velocity.y};
-    enemy2.velocity = {x: 0, y: enemy2.velocity.y};
+    enemy.velocity = {x: 0, y: enemy.velocity.y};
 }
 
-// let keyStrokes = {}
 
 document.addEventListener("keydown", (event) => {
     let key = event.key;

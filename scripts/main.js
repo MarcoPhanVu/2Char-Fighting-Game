@@ -57,15 +57,17 @@ let initenemyHP = 900;
 let playerHP = 750;
 let enemyHP = 900;
 
+let time = 4;
+let gameOver = false;
 
 // INITIAL ENTITIES
 const player = new Sprite("player", //Name
     {x: 300, y: 80},                //Position
     Celadon,                        //Appearance
-    playerHP-300,                            //Hitpoints
+    playerHP,                            //Hitpoints
     {x: 0, y: speedY});            //Iniital Velocity
 
-const enemy1 = new Sprite("enemy1", 
+const enemy = new Sprite("enemy", 
     {x: 120, y: 60}, 
     ParadisePink, 
     enemyHP, 
@@ -82,11 +84,38 @@ const enemy2 = new Sprite("enemy2",
 const timer = document.getElementById("timer");
 const playerHealthIndicator = document.getElementById('player-health');
 const enemyHealthIndicator = document.getElementById('enemy-health');
+const overlay = document.getElementById('overlay');
+const gameStat = document.getElementById('game-status');
+const nextBtn = document.getElementById('next-btn');
 
 playerHealthIndicator.innerHTML = player.hp;
-enemyHealthIndicator.innerHTML = enemy1.hp + enemy2.hp;
+enemyHealthIndicator.innerHTML = enemy.hp;
+timer.innerHTML = time;
 
-    
+function decreaseTimer() {
+    setTimeout(decreaseTimer, 1000);
+    timer.innerHTML = time;
+    if (time >= 0) {
+        --time;
+    }
+
+    if (time < 0) {
+        timer.innerHTML = 0;
+        gameOver = true;
+    }
+}
+
+function displayerGameState() {
+    overlay.classList.remove("hidden");
+    if (player.hp == enemy.hp) {
+        gameStat.innerHTML = "TIE";
+    } else if (player.hp > enemy.hp) {
+        gameStat.innerHTML = "Player win";
+    } else if (player.hp < enemy.hp) {
+        gameStat.innerHTML = "Enemy win";
+    }
+}
+
 function updateStat(obj, index) {
     let x = Math.round(obj.pos.x);
     let y = Math.round(obj.pos.y);
@@ -103,7 +132,8 @@ function updateStat(obj, index) {
     playerHealthIndicator.style.width = `${playerHealth}%`;
     playerHealthIndicator.innerHTML = `${playerHealth}%`;
 
-    let enemyHealth = Math.round((enemy1.hp + enemy2.hp)/(enemyHP*2) * 100);
+    let enemyHealth = Math.round((enemy.hp/enemyHP) * 100);
+
     if (enemyHealth <= 0) {
         enemyHealth = 0;
     }
@@ -115,13 +145,13 @@ function updateStat(obj, index) {
 function execute() {
     updateStat(player, 0);    
     updateStat(player.attack, 01);
-    updateStat(enemy1, 2);    
-    updateStat(enemy1.attack, 3);
-    updateStat(enemy2, 4);    
-    updateStat(enemy2.attack, 5);
+    updateStat(enemy, 2);    
+    updateStat(enemy.attack, 3);
     // console.log("player atk: ", player.attack.pos);
     animate();
 }
+
+decreaseTimer();
 
 interval500 = setInterval(execute, 20);
 
