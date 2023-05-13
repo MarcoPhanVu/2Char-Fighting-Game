@@ -132,7 +132,7 @@ function updateStat(obj, index) {
     playerHealthIndicator.style.width = `${playerHealth}%`;
     playerHealthIndicator.innerHTML = `${playerHealth}%`;
 
-    let enemyHealth = Math.round((enemy.hp/playerHP) * 100);
+    let enemyHealth = Math.round((enemy.hp/enemyHP) * 100);
 
     if (enemyHealth <= 0) {
         enemyHealth = 0;
