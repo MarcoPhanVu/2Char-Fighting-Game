@@ -16,6 +16,34 @@ function keepInside(obj) {
     }
 }
 
+function checkAttack(charA, charB) {
+    let atkX = charA.attack.pos.x;
+    let atkW = charA.attack.pos.x + charA.attack.width;
+    let atkY = charA.attack.pos.y;
+    let atkH = charA.attack.pos.y - charA.attack.height;
+    let charBX = charB.pos.x;
+    let charBW = charB.pos.x + charB.width;
+    let charBY = charB.pos.y;
+    let charBH = charB.pos.y + charB.height;
+
+    // cvs.fillStyle = "red";
+    // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
+    // debugger;
+
+
+    if  (
+        ((atkX <= charBX && charBX <= atkW) ||
+        (atkX <= charBW && charBW <= atkW))
+    && 
+        (((atkY >= charBY && charBY >= atkH) ||
+        (atkY >= charBH && charBH >= atkH))) // atkH < atkY
+    ) {
+        charB.hp -= 50;
+        // debugger;
+    }
+    
+}
+
 function checkCollision(base, target) {
     // if ( 
     //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on left
@@ -62,8 +90,8 @@ function animate() {
         }
 
         if (movementState.spacebar_keyPressed == true) { // Player attack
-            player.attack.ing = true;
-            // console.log("hey");
+            // player.attack.ing = true;
+            player.drawAttack();
         }
 
         if (movementState.k_keyPressed == true) {
@@ -92,17 +120,13 @@ function animate() {
             movementState.arrowup_keyPressed = false;
         }
         if (movementState.shift_keyPressed == true) {
-            enemy1.attack.ing = true;
-            enemy2.attack.ing = true;
+            enemy1.drawAttack();
+            enemy2.drawAttack();
         }
 
     player.drawChar();
     enemy1.drawChar();
     enemy2.drawChar();
-
-    player.drawAttack();
-    enemy1.drawAttack();
-    enemy2.drawAttack();
 
     // to stop the character from moving horizontally and keep on falling/jumping
     player.velocity = {x: 0, y: player.velocity.y};

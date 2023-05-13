@@ -9,6 +9,9 @@
 * {
     font-family: "Source Code Pro", monospace;
     /* display: block; */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -17,35 +20,83 @@ body {
     flex-direction: row;
 }
 
-table {
-    border: 2px solid black;
+.hidden {
+    display: none !important;
 }
 
-
-
-#main-display {
-    /* background-color: teal; */
+#game-container {
+    /* background-color: rgb(92, 134, 61); */
+    display: flex;
+    position: relative;
 }
 
-.new-reporter {
+#status-bar {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    height: 60px;
+    width: calc(100% - 32px);
+    align-items: center;
+    /* background-color: aquamarine; */
+    padding: 16px;
+}
+
+#status-bar .health-bar {
+    position: relative;
+    flex: 5;
+    background-color: rgb(168, 0, 31);
+    height: 32px;
+    width: 200px;
+    border: 2px #000 solid;
+    display: flex;
+}
+
+#status-bar .health-bar > div {
+    height: 28px;
+}
+
+#player-health {
+    background-color: rgb(8, 151, 0);
+    width: 72%;
+}
+
+#enemy-health {
+    background-color: rgb(0, 34, 202);
+    width: 92%;
+}
+
+#status-bar .timer {
+    flex: 1;
+    background-color: green;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    color: #fff;
+    border: 2px #bbbbbb solid;
+    margin: 0 4px;
+}
+
+#reporter {
     display: flex;
     background-color: #fff;
 }
 
-.new-reporter .value-column {
+#reporter .value-column {
     display: flex;
     flex-direction: column;
     resize: both;
     border: 1px #000 solid;
 }
 
-.new-reporter .value-column > div {
+#reporter .value-column > div {
     padding: 8px 16px;
     border-bottom: 2px #000 solid;
     border-left: none;
 }
 
-.new-reporter .value-column .category {
+#reporter .value-column .category {
     padding: 8px 16px;
     border-left: none;
     color: #fff;
@@ -54,3 +105,28 @@ table {
     overflow: auto;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+.test-div {
+    position: relative;
+    height: 28px;
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fff;
+
+}
+
+.test-div-inside {
+    background-color: rgb(0, 36, 239);
+    width: 32%;
+}

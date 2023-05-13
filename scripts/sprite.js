@@ -13,12 +13,13 @@ class Sprite {
             name: `${this.name}'s attack`,
             ing: false,
             direction: "toRight",
-            pos: {
-                x: this.pos.x,
-                y: this.pos.y
+            pos: { //don't modify here because this.x/y will be changed a lot
+                x: 0,
+                y: 0
             },
-            width: 60,
-            height: 20
+            width: 80,
+            height: 40,
+            availForAttack: true
         }
 
         // States
@@ -45,48 +46,70 @@ class Sprite {
 
 
         keepInside(this);
-
-        // setTimeout(() => {
-        //     dataState[`${this.name}`].attacking = false; // to stop char from attacking for ever
-        // }, 200)
-        
     }
 
 
     
     drawAttack() {
-        this.attack.pos.x = this.pos.x + this.width; //start 
-        this.attack.pos.y = this.pos.y + this.height/2;
-
-        if (this.attack.ing == true) { // Dynamic name
+        
+        
+        dataExtraInfo[0].innerHTML = "avail: " + this.attack.availForAttack;
+        if (this.attack.availForAttack == true) {
+            this.attack.pos.x = this.pos.x + this.width; //start 
+            this.attack.pos.y = this.pos.y + this.height/2;
+    
             cvs.fillStyle = CaribeanGreen;
             if (this.attack.direction == "toRight") {
                 cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             } 
-
+    
             if (this.attack.direction == "toLeft") {
                 this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
                 cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
             }
-            
-            setTimeout(() => { 
-                this.attack.ing = false; // to stop char from attacking for ever
-            }, 200)  
-
-            //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
             if (this == player) {
-                dataState[0].innerHTML = `${checkCollision(this.attack, enemy1)}`; 
-                dataState[1].innerHTML = `${checkCollision(this.attack, enemy2)}`;
+                checkAttack(this, enemy1);
+                checkAttack(this, enemy2);
             }
 
             else if (this == enemy1) {
-                dataState[3].innerHTML = `${checkCollision(enemy1.attack, player)}`; 
+                checkAttack(this, player); 
             }
 
             else if (this == enemy2) {
-                dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
+                checkAttack(this, player); 
             }
+
+            this.attack.availForAttack = false;
+
+            setTimeout(() => {
+                this.attack.availForAttack = true;
+                console.log("Avail")
+            }, 200)
         }
+        
+        // this.attack.ing = false;
+
+        // setTimeout(() => {
+        //     this.attack.ing = true;
+        //     console.log("true")
+        // }, 750)
+
+
+            //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
+            // if (this == player) {
+            //     dataState[0].innerHTML = `${checkCollision(this.attack, enemy1)}`; 
+            //     dataState[1].innerHTML = `${checkCollision(this.attack, enemy2)}`;
+            // }
+
+            // else if (this == enemy1) {
+            //     dataState[3].innerHTML = `${checkCollision(enemy1.attack, player)}`; 
+            // }
+
+            // else if (this == enemy2) {
+            //     dataState[5].innerHTML = `${checkCollision(enemy2.attack, player)}`; 
+            // }
+
     }
     
     // update() {

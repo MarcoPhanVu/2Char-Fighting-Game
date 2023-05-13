@@ -10,9 +10,21 @@
     <link rel="stylesheet" type ="text/css" href="styles/styles.css">
 </head>
 <body>
-    <canvas id="game-display"></canvas>
+    <div id="game-container">
+        <div id="status-bar">
+    <div class="health-bar" style="justify-content: flex-end;">
+                <div id="player-health"></div>
+            </div>
+            <div class="timer">36</div>
+            <div class="health-bar">
+                <div id="enemy-health"></div>
+            </div>
+        </div>
 
-    <div class="new-reporter">
+        <canvas id="game-display"></canvas>
+    </div>
+
+    <div id="reporter" class="">
         <div class="value-column">
             <div class="category">Name</div>
 
@@ -53,6 +65,10 @@
             <div class="value-data" value-data-extra-info>blank</div>
             <div class="value-data" value-data-extra-info>blank</div>
         </div>
+    </div>
+
+    <div class="test-div">
+        <div class="test-div-inside"></div>
     </div>
 
     <!-- <div class="color-displayer">Color Displayer</div> -->
