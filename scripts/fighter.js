@@ -107,6 +107,14 @@ class Fighter {
             // }
     }
 
+    update() {
+        this.drawSelf();
+        if (this.attack.ing == true) {
+            this.drawAttack();
+        }
+        this.attack.ing = false;
+    }
+
     jump() {
         this.velocity.y = -speedY;
         this.inAir = true;

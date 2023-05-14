@@ -75,7 +75,7 @@ let initenemyHP = 900;
 let playerHP = 750;
 let enemyHP = 900;
 
-let time = 10;
+let time = 60;
 let gameOver = false;
 
 // INITIAL ENTITIES
@@ -168,7 +168,7 @@ function execute() {
     animate();
 }
 
-// decreaseTimer();
+decreaseTimer();
 
 interval500 = setInterval(execute, 25);
 

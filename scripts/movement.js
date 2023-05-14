@@ -79,8 +79,8 @@ function animate() {
     cvs.clearRect(0, 0, display.width, display.height);
     // cvs.fillStyle = FeldGrau;
     // cvs.fillRect(0, 0, display.width, display.height);
-    background.drawSelf();
-    shop.drawSelf();
+    background.update();
+    shop.update();
 
 
 // Movement
@@ -102,8 +102,7 @@ function animate() {
         }
 
         if (movementState.spacebar_keyPressed == true) { // Player attack
-            // player.attack.ing = true;
-            player.drawAttack();
+            player.attack.ing = true;
         }
 
         if (movementState.k_keyPressed == true) {
@@ -127,11 +126,11 @@ function animate() {
             movementState.arrowup_keyPressed = false;
         }
         if (movementState.shift_keyPressed == true) {
-            enemy.drawAttack();
+            enemy.attack.ing = true;
         }
     
-    player.drawSelf();
-    enemy.drawSelf();
+    player.update();
+    enemy.update();
 
     // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};

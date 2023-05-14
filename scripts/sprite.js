@@ -27,6 +27,11 @@ class Sprite {
             this.height
         );
         // cvs.drawImage(this.image, this.pos.x, this.pos.y, this.image.width, this.image.height);
+    }
+
+    update() {
+        this.drawSelf();
+
         if (this.maxFrames - 1 > this.currentFrame) {
             this.currentFrame += 1;
         } else {
