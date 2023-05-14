@@ -1,13 +1,15 @@
 let gravity = 1.2;
 
 function keepInside(obj) {
-    if (obj.pos.y + 80 >= display.height) { // Ground
-        obj.pos.y = display.height - 80;
+    let calcGround = 80 + 60; // 80 = Char height, 60 = Ground height
+
+    if (obj.pos.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
+        obj.pos.y = display.height - calcGround; // 80 = Char height, 60 = Ground height
         obj.inAir = false;
         obj.velocity.y = 0; // to prevent weird attack's Y offsets
     }
 
-    if (obj.pos.x + 40 >= display.width) { //R ight
+    if (obj.pos.x + 40 >= display.width) { //Right
         obj.pos.x = display.width - 40;
     }
     
@@ -28,8 +30,6 @@ function checkAttack(charA, charB) {
 
     // cvs.fillStyle = "red";
     // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
-    // debugger;
-
 
     if  (
         ((atkX <= charBX && charBX <= atkW) ||
@@ -77,8 +77,11 @@ function animate() {
     }
 
     cvs.clearRect(0, 0, display.width, display.height);
-    cvs.fillStyle = FeldGrau;
-    cvs.fillRect(0, 0, display.width, display.height);
+    // cvs.fillStyle = FeldGrau;
+    // cvs.fillRect(0, 0, display.width, display.height);
+    background.drawSelf();
+    shop.drawSelf();
+
 
 // Movement
     //Avoid using elseif because we need to be able to use multiple keys at once
@@ -126,9 +129,9 @@ function animate() {
         if (movementState.shift_keyPressed == true) {
             enemy.drawAttack();
         }
-
-    player.drawChar();
-    enemy.drawChar();
+    
+    player.drawSelf();
+    enemy.drawSelf();
 
     // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};
