@@ -1,9 +1,9 @@
 // Main Canvas
 const display = document.querySelector("#game-display");
 const cvs = display.getContext("2d");
-let screenRatio = 0.6;
+let screenRatio = 0.8;
 display.width = 1200 * screenRatio;
-display.height = 800 * screenRatio;
+display.height = 600 * screenRatio;
 
 
 // For report
@@ -43,12 +43,30 @@ const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
 // COLORS END
 
 // BACKGROUND START
-cvs.fillStyle = Xanadu;
-cvs.fillRect(0, 0, display.width, display.height);
+// cvs.fillStyle = Xanadu;
+// cvs.fillRect(0, 0, display.width, display.height);
+const background = new Sprite ({
+    name: "background-main",
+    position: {x: 0, y: 0},
+    size: {width: display.width, height: display.height},
+    imageSrc: '../assets/Chris Courses - Fighting Game/background.png',
+    scale: 1,
+    maxFrames: 1
+});
+
+const shop = new Sprite ({
+    name: "background-shop",
+    position: {x: 600, y: 100},
+    size: {width: 180 * 6, height: 200},
+    imageSrc: '../assets/Chris Courses - Fighting Game/shop.png',
+    scale: 1.5,
+    maxFrames: 6
+});
+
 
 
 // INITIAL VALUES
-let speedX = 8;
+let speedX = 5;
 let speedY = 20;
 
 let initplayerHP = 750;
@@ -57,27 +75,26 @@ let initenemyHP = 900;
 let playerHP = 750;
 let enemyHP = 900;
 
-let time = 4;
+let time = 10;
 let gameOver = false;
 
 // INITIAL ENTITIES
-const player = new Sprite("player", //Name
-    {x: 300, y: 80},                //Position
-    Celadon,                        //Appearance
-    playerHP,                            //Hitpoints
-    {x: 0, y: speedY});            //Iniital Velocity
+const player = new Fighter({
+    name: "player",
+    position: {x: 300, y: 80},
+    appearance: UnbleachedSilk,
+    hitpoints: playerHP,
+    velocity: {x: 0, y: speedY}
+});
 
-const enemy = new Sprite("enemy", 
-    {x: 120, y: 60}, 
-    ParadisePink, 
-    enemyHP, 
-    {x: 0, y: speedY});
+const enemy = new Fighter({
+    name: "enemy", 
+    position: {x: 120, y: 60}, 
+    appearance: ParadisePink, 
+    hitpoints: enemyHP, 
+    velocity: {x: 0, y: speedY}
+});
 
-const enemy2 = new Sprite("enemy2", 
-    {x: 560, y: 200}, 
-    FieryRose, 
-    enemyHP-500,
-    {x: 0, y: speedY});
 
 
 // User Interface
@@ -151,9 +168,9 @@ function execute() {
     animate();
 }
 
-decreaseTimer();
+// decreaseTimer();
 
-interval500 = setInterval(execute, 20);
+interval500 = setInterval(execute, 25);
 
 
 

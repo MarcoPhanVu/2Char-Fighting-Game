@@ -1,7 +1,7 @@
 let gravity = 1.2;
 
 function keepInside(obj) {
-    let calcGround = 80 + 60; // 80 = Char height, 60 = Ground height
+    let calcGround = 80 + 80; // 80 = Char height, 60 = Ground height
 
     if (obj.pos.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
         obj.pos.y = display.height - calcGround; // 80 = Char height, 60 = Ground height
