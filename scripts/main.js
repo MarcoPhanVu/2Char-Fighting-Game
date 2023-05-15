@@ -51,7 +51,7 @@ const background = new Sprite ({
     size: {width: display.width, height: display.height},
     imageSrc: '../assets/Chris Courses - Fighting Game/background.png',
     scale: 1,
-    maxFrames: 1
+    framesMax: 1
 });
 
 const shop = new Sprite ({
@@ -60,7 +60,7 @@ const shop = new Sprite ({
     size: {width: 180 * 6, height: 200},
     imageSrc: '../assets/Chris Courses - Fighting Game/shop.png',
     scale: 1.5,
-    maxFrames: 6
+    framesMax: 6
 });
 
 
