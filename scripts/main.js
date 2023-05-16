@@ -134,8 +134,8 @@ function displayerGameState() {
 }
 
 function updateStat(obj, index) {
-    let x = Math.round(obj.pos.x);
-    let y = Math.round(obj.pos.y);
+    let x = Math.round(obj.position.x);
+    let y = Math.round(obj.position.y);
 
     dataState[index].innerHTML = `${obj.name} : ${obj.hp}HP`;
     // dataLocation[index].innerHTML = `(${x}-${y}) >>> (${x + obj.width})-${y + obj.height})`
@@ -168,7 +168,7 @@ function execute() {
     animate();
 }
 
-decreaseTimer();
+// decreaseTimer();
 
 interval500 = setInterval(execute, 25);
 
@@ -188,7 +188,19 @@ interval500 = setInterval(execute, 25);
 
 
 
+const lama = new notFighter({
+    name: "lama",
+    position: {x: 400, y: 20},
+    size: {width: 50, height: 80}, 
+    // imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
+    imageSrc: '../assets/lama1.jpg',
+    scale: 2,
+    framesMax: 1,
+    frameCurrent: 1,
 
+    hitpoints: playerHP,
+    velocity: {x: 0, y: speedY}
+});
 
 
 

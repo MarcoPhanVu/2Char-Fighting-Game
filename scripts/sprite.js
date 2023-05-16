@@ -1,7 +1,15 @@
 class Sprite {
-    constructor({name, position, size, imageSrc, scale = 1, framesMax = 1, frameCurrent = 0}) {
+    constructor({
+        name, 
+        position, 
+        size, 
+        imageSrc, 
+        scale = 1, 
+        framesMax = 1, 
+        frameCurrent = 0
+    }) {
         this.name = name;
-        this.pos = position;
+        this.position = position;
         this.scale = scale;
         this.width = size.width * this.scale;
         this.height = size.height * this.scale;
@@ -16,19 +24,19 @@ class Sprite {
     drawSelf() {
         cvs.drawImage(
             this.image, 
-            // imagge croppping
+            // image croppping
             this.frameCurrent * (this.image.width / this.framesMax),
             0,
             this.image.width / this.framesMax, 
             this.image.height, 
 
             // Draw
-            this.pos.x, 
-            this.pos.y, 
+            this.position.x, 
+            this.position.y, 
             this.width / this.framesMax, 
             this.height
         );
-        // cvs.drawImage(this.image, this.pos.x, this.pos.y, this.image.width, this.image.height);
+        // cvs.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height);
     }
 
     update() {

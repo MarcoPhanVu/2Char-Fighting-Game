@@ -3,30 +3,30 @@ let gravity = 1.2;
 function keepInside(obj) {
     let calcGround = 80 + 80; // 80 = Char height, 60 = Ground height
 
-    if (obj.pos.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
-        obj.pos.y = display.height - calcGround; // 80 = Char height, 60 = Ground height
+    if (obj.position.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
+        obj.position.y = display.height - calcGround; // 80 = Char height, 60 = Ground height
         obj.inAir = false;
         obj.velocity.y = 0; // to prevent weird attack's Y offsets
     }
 
-    if (obj.pos.x + 40 >= display.width) { //Right
-        obj.pos.x = display.width - 40;
+    if (obj.position.x + 40 >= display.width) { //Right
+        obj.position.x = display.width - 40;
     }
     
-    if (obj.pos.x <= 0) { // left
-        obj.pos.x = 0;
+    if (obj.position.x <= 0) { // left
+        obj.position.x = 0;
     }
 }
 
 function checkAttack(charA, charB) {
-    let atkX = charA.attack.pos.x;
-    let atkW = charA.attack.pos.x + charA.attack.width;
-    let atkY = charA.attack.pos.y;
-    let atkH = charA.attack.pos.y - charA.attack.height;
-    let charBX = charB.pos.x;
-    let charBW = charB.pos.x + charB.width;
-    let charBY = charB.pos.y;
-    let charBH = charB.pos.y + charB.height;
+    let atkX = charA.attack.position.x;
+    let atkW = charA.attack.position.x + charA.attack.width;
+    let atkY = charA.attack.position.y;
+    let atkH = charA.attack.position.y - charA.attack.height;
+    let charBX = charB.position.x;
+    let charBW = charB.position.x + charB.width;
+    let charBY = charB.position.y;
+    let charBH = charB.position.y + charB.height;
 
     // cvs.fillStyle = "red";
     // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
@@ -46,16 +46,16 @@ function checkAttack(charA, charB) {
 
 function checkCollision(base, target) {
     // if ( 
-    //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on left
+    //     (base.position.x >= target.position.x && base.position.x <= target.position.x + target.width) // target on left
     // ||
-    //     (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on right
+    //     (base.position.x + base.width >= target.position.x && base.position.x + base.width <= target.position.x + target.width) // target on right
     // ) {
     //     // console.log(`${base.name} hit ${target.name}`)
     //     return true;
     // }
 
-    if ((base.pos.x <= target.pos.x && target.pos.x <= base.pos.x + base.width) ||
-        (base.pos.x <= target.pos.x + target.width && target.pos.x + target.width <= base.pos.x + base.width)) {
+    if ((base.position.x <= target.position.x && target.position.x <= base.position.x + base.width) ||
+        (base.position.x <= target.position.x + target.width && target.position.x + target.width <= base.position.x + base.width)) {
         return `${base.name} hit ${target.name} on ${base.direction}`;
     }
 
@@ -89,20 +89,29 @@ function animate() {
         if (movementState.d_keyPressed == true) { //Right
             player.velocity.x = speedX;
             player.attack.direction = "toRight";
+
+            lama.velocity.x = speedX;
+            lama.attack.direction = "toRight";
         }
 
         if (movementState.a_keyPressed == true) { //Left
             player.velocity.x = -speedX;
             player.attack.direction = "toLeft";
+
+            lama.velocity.x = -speedX;
+            lama.attack.direction = "toLeft";
         }
 
         if (movementState.w_keyPressed == true && player.inAir == false) { //Jump
             player.jump();
             movementState.w_keyPressed = false;
+
+            lama.jump();
         }
 
         if (movementState.spacebar_keyPressed == true) { // Player attack
             player.attack.ing = true;
+            lama.attack.ing = true;
         }
 
         if (movementState.k_keyPressed == true) {
@@ -131,6 +140,7 @@ function animate() {
     
     player.update();
     enemy.update();
+    lama.update();
 
     // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};
