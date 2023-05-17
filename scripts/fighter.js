@@ -1,25 +1,37 @@
-class Fighter {
+class Fighter extends Sprite {
     constructor({
         name, 
         position,
-        appearance, 
+        size, 
+        imageSrc, 
+        scale, 
+        framesMax,
+        frameCurrent,
+        centeringOffset,
         hitpoints = 1000, 
-        velocity = {x: 0, y: 0}
+        velocity = {x: 0, y: 0},
     }) {
-        this.name = name;
-        this.pos = position;
-        this.appearance = appearance;
+        super({
+            name,
+            position,
+            size,
+            imageSrc,
+            scale,
+            framesMax,
+            frameCurrent,
+            centeringOffset
+        })
+
+
         this.hp = hitpoints;
         this.velocity = velocity;
-
-        this.width = 40;
-        this.height = 80;
 
         this.attack = {
             name: `${this.name}'s attack`,
             ing: false,
             direction: "toRight",
-            pos: { //don't modify here because this.x/y will be changed a lot
+            position: { //don't modify here because this.x/y will be changed a lot
+                // and attack.position will not be updated at the start of the game so if modified, shits will looks werid
                 x: 0,
                 y: 0
             },
@@ -31,53 +43,33 @@ class Fighter {
         // States
         this.inAir = true;
     }
-
-
-    drawSelf() {
-        // Sprite
-        if (this.inAir) {
-            this.velocity.y += gravity;
-        }
-
-        this.pos.x += this.velocity.x;
-        this.pos.y += this.velocity.y;
-
-        cvs.fillStyle = this.appearance;
-        cvs.fillRect(this.pos.x, this.pos.y, this.width, this.height);
-
-        // error this so future me can see
-        cvs.font = "30px Nunito";
-        cvs.fillStyle = this.appearance;
-        cvs.fillText(`${this.name}`, this.pos.x - this.width/2, this.pos.y - 15);
-
-
-        keepInside(this);
-    }
     
     drawAttack() {
         dataExtraInfo[0].innerHTML = "avail: " + this.attack.availForAttack;
         if (this.attack.availForAttack == true) {
-            this.attack.pos.x = this.pos.x + this.width; //start 
-            this.attack.pos.y = this.pos.y + this.height/2;
+            this.attack.position.x = this.position.x + this.width; //start 
+            this.attack.position.y = this.position.y + this.height/2;
     
 
             cvs.fillStyle = SunGlow;
 
 
             if (this.attack.direction == "toRight") {
-                cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
+                cvs.fillRect(this.attack.position.x, this.attack.position.y, this.attack.width, -this.attack.height);
             } 
     
             if (this.attack.direction == "toLeft") {
-                this.attack.pos.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
-                cvs.fillRect(this.attack.pos.x, this.attack.pos.y, this.attack.width, -this.attack.height);
+                this.attack.position.x -= this.width + this.attack.width; // Move attack locX to the end of leftside(attack)
+                cvs.fillRect(this.attack.position.x, this.attack.position.y, this.attack.width, -this.attack.height);
             }
             if (this == player) {
+                console.log(`${this} attacking enemy`);
                 checkAttack(this, enemy);
             }
 
             else if (this == enemy) {
                 checkAttack(this, player); 
+                console.log(`${this} attacking player`);
             }
 
 
@@ -85,34 +77,33 @@ class Fighter {
 
             setTimeout(() => {
                 this.attack.availForAttack = true;
-                // console.log("Avail")
             }, 200)
         }
-        
-        // this.attack.ing = false;
-
-        // setTimeout(() => {
-        //     this.attack.ing = true;
-        //     console.log("true")
-        // }, 750)
-
-
-            //KEEP THIS, IT'LL BE USEFUL FOR DEBUGGING
-            // if (this == player) {
-            //     dataState[0].innerHTML = `${checkCollision(this.attack, enemy)}`; 
-            // }
-
-            // else if (this == enemy) {
-            //     dataState[3].innerHTML = `${checkCollision(enemy.attack, player)}`; 
-            // }
     }
 
     update() {
-        this.drawSelf();
+        if (this.inAir == true) {
+            this.velocity.y += gravity;
+        }
+
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+
+        cvs.fillStyle = "coral";
+        cvs.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+        
+        super.drawSelf();
+        
         if (this.attack.ing == true) {
             this.drawAttack();
         }
+
+        keepInside(this);
+
         this.attack.ing = false;
+
     }
 
     jump() {

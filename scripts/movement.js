@@ -1,68 +1,52 @@
 let gravity = 1.2;
 
 function keepInside(obj) {
-    let calcGround = 80 + 80; // 80 = Char height, 60 = Ground height
+    let calcGround = obj.height + 50; // 100 = Ground height
 
-    if (obj.pos.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
-        obj.pos.y = display.height - calcGround; // 80 = Char height, 60 = Ground height
+    if (obj.position.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond(this cause the character to "bounce")
+        obj.position.y = display.height - calcGround;
         obj.inAir = false;
         obj.velocity.y = 0; // to prevent weird attack's Y offsets
     }
 
-    if (obj.pos.x + 40 >= display.width) { //Right
-        obj.pos.x = display.width - 40;
+    if (obj.position.x + 40 >= display.width) { //Right
+        obj.position.x = display.width - 40;
     }
     
-    if (obj.pos.x <= 0) { // left
-        obj.pos.x = 0;
+    if (obj.position.x <= 0) { // left
+        obj.position.x = 0;
     }
 }
 
 function checkAttack(charA, charB) {
-    let atkX = charA.attack.pos.x;
-    let atkW = charA.attack.pos.x + charA.attack.width;
-    let atkY = charA.attack.pos.y;
-    let atkH = charA.attack.pos.y - charA.attack.height;
-    let charBX = charB.pos.x;
-    let charBW = charB.pos.x + charB.width;
-    let charBY = charB.pos.y;
-    let charBH = charB.pos.y + charB.height;
+    let atkX = charA.attack.position.x;
+    let atkW = charA.attack.position.x + charA.attack.width;
+    let atkY = charA.attack.position.y;
+    let atkH = charA.attack.position.y - charA.attack.height;
+    let charBX = charB.position.x;
+    let charBW = charB.position.x + charB.size.width;
+    let charBY = charB.position.y;
+    let charBH = charB.position.y + charB.size.height;
 
-    // cvs.fillStyle = "red";
+    // collision box checking
+    // cvs.fillStyle = "coral";
     // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
+
+    // cvs.fillStyle = "skyblue";
+    // cvs.fillRect(charBX, charBY, charB.size.width, charB.size.height);
+    
 
     if  (
         ((atkX <= charBX && charBX <= atkW) ||
         (atkX <= charBW && charBW <= atkW))
     && 
-        (((atkY >= charBY && charBY >= atkH) ||
-        (atkY >= charBH && charBH >= atkH))) // atkH < atkY
+        (((charBY <= atkH && atkH <= charBH) ||
+        (charBY <= atkY && atkY <= charBH))) // atkH < atkY
     ) {
-        charB.hp -= 50;
-        // debugger;
+        console.log("reached")
+        charB.hp -= 75;
     }
-    
 }
-
-function checkCollision(base, target) {
-    // if ( 
-    //     (base.pos.x >= target.pos.x && base.pos.x <= target.pos.x + target.width) // target on left
-    // ||
-    //     (base.pos.x + base.width >= target.pos.x && base.pos.x + base.width <= target.pos.x + target.width) // target on right
-    // ) {
-    //     // console.log(`${base.name} hit ${target.name}`)
-    //     return true;
-    // }
-
-    if ((base.pos.x <= target.pos.x && target.pos.x <= base.pos.x + base.width) ||
-        (base.pos.x <= target.pos.x + target.width && target.pos.x + target.width <= base.pos.x + base.width)) {
-        return `${base.name} hit ${target.name} on ${base.direction}`;
-    }
-
-
-    return "no hit";
-}
-
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
@@ -77,8 +61,6 @@ function animate() {
     }
 
     cvs.clearRect(0, 0, display.width, display.height);
-    // cvs.fillStyle = FeldGrau;
-    // cvs.fillRect(0, 0, display.width, display.height);
     background.update();
     shop.update();
 
@@ -138,6 +120,10 @@ function animate() {
 }
 
 
+
+
+
+
 document.addEventListener("keydown", (event) => {
     let key = event.key;
     if (key == " ") {
@@ -165,6 +151,8 @@ function keyReleaseHandler(key) {
     let placeholder = key.toLowerCase() + "_keyPressed";
     movementState[`${placeholder}`] = false;
 }
+
+
 
 
 // THIS FUNCTION WILL ONLY ADD UNDEFINED CASES, IF THEY'VE EXISTED THEN NOTHING WILL HAPPEN
