@@ -1,4 +1,4 @@
-class Fighter {
+class deprecated {
     constructor({
         name, 
         position,
@@ -42,8 +42,8 @@ class Fighter {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        cvs.fillStyle = this.appearance;
-        cvs.fillRect(this.position.x, this.position.y, this.width, this.height);
+        cvs.fillStyle = "crimson";
+        cvs.fillRect(this.position.x, this.position.y, -100, -100);
 
         cvs.font = "30px Nunito";
         cvs.fillStyle = "crimson";
@@ -121,7 +121,7 @@ class Fighter {
 }
 
 
-class notFighter extends Sprite {
+class Fighter extends Sprite {
     constructor({
         name, 
         position,
@@ -130,9 +130,9 @@ class notFighter extends Sprite {
         scale, 
         framesMax,
         frameCurrent,
-
+        centeringOffset,
         hitpoints = 1000, 
-        velocity = {x: 0, y: 0}
+        velocity = {x: 0, y: 0},
     }) {
         super({
             name,
@@ -141,7 +141,8 @@ class notFighter extends Sprite {
             imageSrc,
             scale,
             framesMax,
-            frameCurrent
+            frameCurrent,
+            centeringOffset
         })
 
 
@@ -167,42 +168,6 @@ class notFighter extends Sprite {
         // States
         this.inAir = true;
     }
-
-
-    drawSelf() {
-        if (this.inAir == true) {
-            this.velocity.y += gravity;
-        }
-
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-
-        cvs.drawImage(
-            this.image, 
-            // image croppping
-            this.frameCurrent * (this.image.width / this.framesMax),
-            0,
-            (this.image.width) / this.framesMax, 
-            (this.image.height), 
-
-            // Draw
-            this.position.x, 
-            this.position.y, 
-            this.width / this.framesMax, 
-            this.height
-        );
-
-        // cvs.fillStyle = this.appearance;
-        // cvs.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-        // // error this so future me can see
-        // cvs.font = "30px Nunito";
-        // cvs.fillStyle = this.appearance;
-        // cvs.fillText(`${this.name}`, this.position.x - this.width/2, this.position.y - 15);
-
-
-        keepInside(this);
-    }
     
     drawAttack() {
         dataExtraInfo[0].innerHTML = "avail: " + this.attack.availForAttack;
@@ -223,11 +188,13 @@ class notFighter extends Sprite {
                 cvs.fillRect(this.attack.position.x, this.attack.position.y, this.attack.width, -this.attack.height);
             }
             if (this == player) {
+                console.log(`${this} attacking enemy`);
                 checkAttack(this, enemy);
             }
 
             else if (this == enemy) {
                 checkAttack(this, player); 
+                console.log(`${this} attacking player`);
             }
 
 
@@ -235,24 +202,33 @@ class notFighter extends Sprite {
 
             setTimeout(() => {
                 this.attack.availForAttack = true;
-                // console.log("Avail")
             }, 200)
         }
-        
-        // this.attack.ing = false;
-
-        // setTimeout(() => {
-        //     this.attack.ing = true;
-        //     console.log("true")
-        // }, 750)
     }
 
     update() {
-        this.drawSelf();
+        if (this.inAir == true) {
+            this.velocity.y += gravity;
+        }
+
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+
+        cvs.fillStyle = "coral";
+        // cvs.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+        
+        super.drawSelf();
+        
         if (this.attack.ing == true) {
             this.drawAttack();
         }
+
+        keepInside(this);
+
         this.attack.ing = false;
+
     }
 
     jump() {

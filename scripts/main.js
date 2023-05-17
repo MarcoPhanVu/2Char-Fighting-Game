@@ -48,7 +48,7 @@ const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
 const background = new Sprite ({
     name: "background-main",
     position: {x: 0, y: 0},
-    size: {width: display.width, height: display.height},
+    size: {width: display.width, height: display.height + 35, useSelfSize: false},
     imageSrc: '../assets/Chris Courses - Fighting Game/background.png',
     scale: 1,
     framesMax: 1
@@ -56,10 +56,10 @@ const background = new Sprite ({
 
 const shop = new Sprite ({
     name: "background-shop",
-    position: {x: 600, y: 100},
-    size: {width: 180 * 6, height: 200},
+    position: {x: 580, y: 80},
+    size: {width: 180, height: 200, useSelfSize: false},
     imageSrc: '../assets/Chris Courses - Fighting Game/shop.png',
-    scale: 1.5,
+    scale: 1.75,
     framesMax: 6
 });
 
@@ -81,16 +81,26 @@ let gameOver = false;
 // INITIAL ENTITIES
 const player = new Fighter({
     name: "player",
-    position: {x: 300, y: 80},
-    appearance: UnbleachedSilk,
+    position: {x: 0, y: 80},
+    size: {width: 72, height: 120, useSelfSize: true}, 
+    imageSrc: '../assets/Chris Courses - Fighting Game/samuraiMack/Idle.png',
+    scale: 2,
+    framesMax: 8,
+    frameCurrent: 1,
+    centeringOffset: {x: 80, y: 62},
     hitpoints: playerHP,
     velocity: {x: 0, y: speedY}
 });
 
 const enemy = new Fighter({
-    name: "enemy", 
-    position: {x: 120, y: 60}, 
-    appearance: ParadisePink, 
+    name: "enemy",
+    position: {x: 350, y: 60}, 
+    size: {width: 72, height: 120, useSelfSize: true}, 
+    imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
+    scale: 2.15,
+    framesMax: 4,
+    frameCurrent: 1,
+    centeringOffset: {x: 88, y: 72},
     hitpoints: enemyHP, 
     velocity: {x: 0, y: speedY}
 });
@@ -161,14 +171,14 @@ function updateStat(obj, index) {
 
 function execute() {
     updateStat(player, 0);    
-    updateStat(player.attack, 01);
+    updateStat(player.attack, 1);
     updateStat(enemy, 2);    
     updateStat(enemy.attack, 3);
     // console.log("player atk: ", player.attack.pos);
     animate();
 }
 
-// decreaseTimer();
+decreaseTimer();
 
 interval500 = setInterval(execute, 25);
 
@@ -188,16 +198,30 @@ interval500 = setInterval(execute, 25);
 
 
 
-const lama = new notFighter({
+const lama = new Fighter({
     name: "lama",
     position: {x: 400, y: 20},
-    size: {width: 50, height: 80}, 
-    // imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
-    imageSrc: '../assets/lama1.jpg',
-    scale: 2,
-    framesMax: 1,
+    size: {width: 60 * 4, height: 50}, 
+    imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
+    // imageSrc: '../assets/lama1.jpg                                ',
+    scale: 1,
+    framesMax: 4,
     frameCurrent: 1,
+    centeringOffset: {x: 80, y: 70},
+    hitpoints: playerHP,
+    velocity: {x: 0, y: speedY}
+});
 
+const kama = new Fighter({
+    name: " kama",
+    position: {x: 400, y: 20},
+    size: {width: 50 * 4, height: 50}, 
+    // imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
+    imageSrc: '../assets/lama1.jpg                                ',
+    scale: 1,
+    framesMax: 4,
+    frameCurrent: 1,
+    centeringOffset: {x: 70, y: 50},
     hitpoints: playerHP,
     velocity: {x: 0, y: speedY}
 });

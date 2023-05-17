@@ -6,15 +6,19 @@ class Sprite {
         imageSrc, 
         scale = 1, 
         framesMax = 1, 
-        frameCurrent = 0
+        frameCurrent = 0,
+        centeringOffset = {x: 0, y: 0}
+
     }) {
         this.name = name;
         this.position = position;
         this.scale = scale;
-        this.width = size.width * this.scale;
-        this.height = size.height * this.scale;
+        this.size = size;
+        this.width = size.width;
+        this.height = size.height;
         this.image = new Image();
         this.image.src = imageSrc;
+        this.centeringOffset = centeringOffset;
         this.framesMax = framesMax;
         this.frameCurrent = 0;
         this.frameElapsed = 0;
@@ -22,21 +26,59 @@ class Sprite {
     }
 
     drawSelf() {
-        cvs.drawImage(
-            this.image, 
-            // image croppping
-            this.frameCurrent * (this.image.width / this.framesMax),
-            0,
-            this.image.width / this.framesMax, 
-            this.image.height, 
+        if (this.size.useSelfSize == true) {
+            cvs.drawImage(
+                this.image, 
+                // image croppping
+                this.frameCurrent * (this.image.width / this.framesMax) + this.centeringOffset.x,
+                this.centeringOffset.y,
+                this.width, 
+                this.height, 
+    
+                // Draw
+                this.position.x, 
+                this.position.y, 
+                // (this.image.width * this.scale) / this.framesMax, 
+                // (this.image.height * this.scale),
+                this.width * this.scale, 
+                this.height * this.scale
+            );
+        } else {
+            cvs.drawImage(
+                this.image, 
+                // image croppping
+                this.frameCurrent * (this.image.width / this.framesMax) + this.centeringOffset.x,
+                this.centeringOffset.y,
+                (this.image.width / this.framesMax), 
+                this.image.height, 
+    
+                // Draw
+                this.position.x, 
+                this.position.y, 
+                // (this.image.width * this.scale) / this.framesMax, 
+                // (this.image.height * this.scale),
+                this.width * this.scale, 
+                this.height * this.scale
+            );
+        }
 
-            // Draw
-            this.position.x, 
-            this.position.y, 
-            this.width / this.framesMax, 
-            this.height
-        );
-        // cvs.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height);
+
+        // cvs.drawImage(
+        //     this.image, 
+        //     // image croppping
+        //     this.frameCurrent * (this.image.width / this.framesMax) + this.centeringOffset.x,
+        //     this.centeringOffset.y,
+        //     this.image.width, 
+        //     this.image.height, 
+
+        //     // Draw
+        //     this.position.x, 
+        //     this.position.y, 
+        //     // (this.image.width * this.scale) / this.framesMax, 
+        //     // (this.image.height * this.scale),
+        //     this.image.width * this.scale, 
+        //     this.image.height * this.scale
+        // );
     }
 
     update() {

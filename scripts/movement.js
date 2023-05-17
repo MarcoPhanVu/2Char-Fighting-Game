@@ -1,10 +1,10 @@
 let gravity = 1.2;
 
 function keepInside(obj) {
-    let calcGround = 80 + 80; // 80 = Char height, 60 = Ground height
+    let calcGround = obj.height + 50; // 100 = Ground height
 
     if (obj.position.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
-        obj.position.y = display.height - calcGround; // 80 = Char height, 60 = Ground height
+        obj.position.y = display.height - calcGround;
         obj.inAir = false;
         obj.velocity.y = 0; // to prevent weird attack's Y offsets
     }
@@ -24,23 +24,43 @@ function checkAttack(charA, charB) {
     let atkY = charA.attack.position.y;
     let atkH = charA.attack.position.y - charA.attack.height;
     let charBX = charB.position.x;
-    let charBW = charB.position.x + charB.width;
+    let charBW = charB.position.x + charB.size.width;
     let charBY = charB.position.y;
-    let charBH = charB.position.y + charB.height;
+    let charBH = charB.position.y + charB.size.height;
 
-    // cvs.fillStyle = "red";
-    // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
+    cvs.fillStyle = "coral";
+    cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
+
+    cvs.fillStyle = "skyblue";
+    cvs.fillRect(charBX, charBY, charB.size.width, charB.size.height);
+
+    
 
     if  (
         ((atkX <= charBX && charBX <= atkW) ||
         (atkX <= charBW && charBW <= atkW))
     && 
-        (((atkY >= charBY && charBY >= atkH) ||
-        (atkY >= charBH && charBH >= atkH))) // atkH < atkY
+        (((charBY <= atkH && atkH <= charBH) ||
+        (charBY <= atkY && atkY <= charBH))) // atkH < atkY
     ) {
-        charB.hp -= 50;
+        console.log("reached")
+        charB.hp -= 75;
         // debugger;
     }
+
+
+
+    // if  (
+    //     ((atkX <= charBX && charBX <= atkW) ||
+    //     (atkX <= charBW && charBW <= atkW))
+    // && 
+    //     (((atkY >= charBY && charBY >= atkH) ||
+    //     (atkY >= charBH && charBH >= atkH))) // atkH < atkY
+    // ) {
+    //     console.log("reached")
+    //     charB.hp -= 75;
+    //     // debugger;
+    // }
     
 }
 
@@ -140,7 +160,8 @@ function animate() {
     
     player.update();
     enemy.update();
-    lama.update();
+    // kama.update();
+    // lama.update();
 
     // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};
