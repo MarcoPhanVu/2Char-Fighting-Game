@@ -3,7 +3,7 @@ let gravity = 1.2;
 function keepInside(obj) {
     let calcGround = obj.height + 50; // 100 = Ground height
 
-    if (obj.position.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond
+    if (obj.position.y + calcGround + obj.velocity.y >= display.height) { // +obj.VeloY to prevent character from falling out of the wanted screen for a split milisecond(this cause the character to "bounce")
         obj.position.y = display.height - calcGround;
         obj.inAir = false;
         obj.velocity.y = 0; // to prevent weird attack's Y offsets
@@ -28,12 +28,12 @@ function checkAttack(charA, charB) {
     let charBY = charB.position.y;
     let charBH = charB.position.y + charB.size.height;
 
-    cvs.fillStyle = "coral";
-    cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
+    // collision box checking
+    // cvs.fillStyle = "coral";
+    // cvs.fillRect(atkX, atkY, charA.attack.width, -charA.attack.height);
 
-    cvs.fillStyle = "skyblue";
-    cvs.fillRect(charBX, charBY, charB.size.width, charB.size.height);
-
+    // cvs.fillStyle = "skyblue";
+    // cvs.fillRect(charBX, charBY, charB.size.width, charB.size.height);
     
 
     if  (
@@ -45,44 +45,8 @@ function checkAttack(charA, charB) {
     ) {
         console.log("reached")
         charB.hp -= 75;
-        // debugger;
     }
-
-
-
-    // if  (
-    //     ((atkX <= charBX && charBX <= atkW) ||
-    //     (atkX <= charBW && charBW <= atkW))
-    // && 
-    //     (((atkY >= charBY && charBY >= atkH) ||
-    //     (atkY >= charBH && charBH >= atkH))) // atkH < atkY
-    // ) {
-    //     console.log("reached")
-    //     charB.hp -= 75;
-    //     // debugger;
-    // }
-    
 }
-
-function checkCollision(base, target) {
-    // if ( 
-    //     (base.position.x >= target.position.x && base.position.x <= target.position.x + target.width) // target on left
-    // ||
-    //     (base.position.x + base.width >= target.position.x && base.position.x + base.width <= target.position.x + target.width) // target on right
-    // ) {
-    //     // console.log(`${base.name} hit ${target.name}`)
-    //     return true;
-    // }
-
-    if ((base.position.x <= target.position.x && target.position.x <= base.position.x + base.width) ||
-        (base.position.x <= target.position.x + target.width && target.position.x + target.width <= base.position.x + base.width)) {
-        return `${base.name} hit ${target.name} on ${base.direction}`;
-    }
-
-
-    return "no hit";
-}
-
 
 const movementState = {} // Empty Object but will be filled and modified with keyPressed and keyRelease function
 
@@ -97,8 +61,6 @@ function animate() {
     }
 
     cvs.clearRect(0, 0, display.width, display.height);
-    // cvs.fillStyle = FeldGrau;
-    // cvs.fillRect(0, 0, display.width, display.height);
     background.update();
     shop.update();
 
@@ -109,29 +71,20 @@ function animate() {
         if (movementState.d_keyPressed == true) { //Right
             player.velocity.x = speedX;
             player.attack.direction = "toRight";
-
-            lama.velocity.x = speedX;
-            lama.attack.direction = "toRight";
         }
 
         if (movementState.a_keyPressed == true) { //Left
             player.velocity.x = -speedX;
             player.attack.direction = "toLeft";
-
-            lama.velocity.x = -speedX;
-            lama.attack.direction = "toLeft";
         }
 
         if (movementState.w_keyPressed == true && player.inAir == false) { //Jump
             player.jump();
             movementState.w_keyPressed = false;
-
-            lama.jump();
         }
 
         if (movementState.spacebar_keyPressed == true) { // Player attack
             player.attack.ing = true;
-            lama.attack.ing = true;
         }
 
         if (movementState.k_keyPressed == true) {
@@ -160,13 +113,15 @@ function animate() {
     
     player.update();
     enemy.update();
-    // kama.update();
-    // lama.update();
 
     // to stop the character from moving horizontally and keep on flying up
     player.velocity = {x: 0, y: player.velocity.y};
     enemy.velocity = {x: 0, y: enemy.velocity.y};
 }
+
+
+
+
 
 
 document.addEventListener("keydown", (event) => {
@@ -196,6 +151,8 @@ function keyReleaseHandler(key) {
     let placeholder = key.toLowerCase() + "_keyPressed";
     movementState[`${placeholder}`] = false;
 }
+
+
 
 
 // THIS FUNCTION WILL ONLY ADD UNDEFINED CASES, IF THEY'VE EXISTED THEN NOTHING WILL HAPPEN

@@ -55,30 +55,10 @@ class Sprite {
                 // Draw
                 this.position.x, 
                 this.position.y, 
-                // (this.image.width * this.scale) / this.framesMax, 
-                // (this.image.height * this.scale),
                 this.width * this.scale, 
                 this.height * this.scale
             );
         }
-
-
-        // cvs.drawImage(
-        //     this.image, 
-        //     // image croppping
-        //     this.frameCurrent * (this.image.width / this.framesMax) + this.centeringOffset.x,
-        //     this.centeringOffset.y,
-        //     this.image.width, 
-        //     this.image.height, 
-
-        //     // Draw
-        //     this.position.x, 
-        //     this.position.y, 
-        //     // (this.image.width * this.scale) / this.framesMax, 
-        //     // (this.image.height * this.scale),
-        //     this.image.width * this.scale, 
-        //     this.image.height * this.scale
-        // );
     }
 
     update() {
@@ -90,7 +70,7 @@ class Sprite {
                 this.frameCurrent += 1;
             } else {
                 this.frameCurrent = 0;
-            }
+            } 
         }
     }
 }

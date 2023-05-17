@@ -13,10 +13,6 @@ const dataLocation = document.querySelectorAll("[value-data-location]");
 const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
 
 
-
-// const colorDisplayer = document.querySelectorAll(".color-displayer");
-// colorDisplayer[0].innerHTML = "Color DIsplayer";
-
 // COLORS START
     // Normal
     GlossyGrape = "#A799B7";
@@ -155,7 +151,6 @@ function updateStat(obj, index) {
     if (playerHealth <= 0) {
         playerHealth = 0;
     }
-    // console.log(playerHealth);
     playerHealthIndicator.style.width = `${playerHealth}%`;
     playerHealthIndicator.innerHTML = `${playerHealth}%`;
 
@@ -164,7 +159,6 @@ function updateStat(obj, index) {
     if (enemyHealth <= 0) {
         enemyHealth = 0;
     }
-    // console.log(enemyHealth);
     enemyHealthIndicator.style.width = `${enemyHealth}%`;
     enemyHealthIndicator.innerHTML = `${enemyHealth}%`;
 }
@@ -174,70 +168,9 @@ function execute() {
     updateStat(player.attack, 1);
     updateStat(enemy, 2);    
     updateStat(enemy.attack, 3);
-    // console.log("player atk: ", player.attack.pos);
     animate();
 }
 
 decreaseTimer();
 
 interval500 = setInterval(execute, 25);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const lama = new Fighter({
-    name: "lama",
-    position: {x: 400, y: 20},
-    size: {width: 60 * 4, height: 50}, 
-    imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
-    // imageSrc: '../assets/lama1.jpg                                ',
-    scale: 1,
-    framesMax: 4,
-    frameCurrent: 1,
-    centeringOffset: {x: 80, y: 70},
-    hitpoints: playerHP,
-    velocity: {x: 0, y: speedY}
-});
-
-const kama = new Fighter({
-    name: " kama",
-    position: {x: 400, y: 20},
-    size: {width: 50 * 4, height: 50}, 
-    // imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
-    imageSrc: '../assets/lama1.jpg                                ',
-    scale: 1,
-    framesMax: 4,
-    frameCurrent: 1,
-    centeringOffset: {x: 70, y: 50},
-    hitpoints: playerHP,
-    velocity: {x: 0, y: speedY}
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
