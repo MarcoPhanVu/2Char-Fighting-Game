@@ -71,8 +71,10 @@ let initenemyHP = 900;
 let playerHP = 750;
 let enemyHP = 900;
 
-let time = 60;
+let time = 10000;
 let gameOver = false;
+
+
 
 // INITIAL ENTITIES
 const player = new Fighter({
@@ -82,7 +84,6 @@ const player = new Fighter({
     imageSrc: '../assets/Chris Courses - Fighting Game/samuraiMack/Idle.png',
     scale: 2,
     framesMax: 8,
-    frameCurrent: 1,
     centeringOffset: {x: 80, y: 62},
     hitpoints: playerHP,
     velocity: {x: 0, y: speedY}
@@ -95,7 +96,6 @@ const enemy = new Fighter({
     imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
     scale: 2.15,
     framesMax: 4,
-    frameCurrent: 1,
     centeringOffset: {x: 88, y: 72},
     hitpoints: enemyHP, 
     velocity: {x: 0, y: speedY}

@@ -91,10 +91,20 @@ class Fighter extends Sprite {
 
 
         cvs.fillStyle = "coral";
-        cvs.fillRect(this.position.x, this.position.y, this.width, this.height);
+        // cvs.fillRect(this.position.x, this.position.y, this.width, this.height);
 
         
         super.drawSelf();
+
+        ++this.frameElapsed;
+
+        if (this.frameElapsed % this.frameToHold == 0) {
+            if (this.framesMax - 1 > this.frameCurrent) {
+                this.frameCurrent += 1;
+            } else {
+                this.frameCurrent = 0;
+            } 
+        }
         
         if (this.attack.ing == true) {
             this.drawAttack();
