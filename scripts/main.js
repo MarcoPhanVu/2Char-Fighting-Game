@@ -14,49 +14,49 @@ const dataExtraInfo = document.querySelectorAll("[value-data-extra-info]");
 
 
 // COLORS START
-    // Normal
-    GlossyGrape = "#A799B7";
-    GlassyGrape = "#9888A5";
-    OldLavender = "#776472";
-    FeldGrau = "#445552";
-    DarkSlateGray = "#294D4A";
-    DimSkyBlue = "#83B5D1";
-    Rythm = "#726E97";
-    SunGlow = "#FFD23F";
-    CaribeanGreen = "#3BCEAC";
-    GoGreen = "#0EAD69";
-    DavysGrey = "#595959";
-    Xanadu = "#808F85";
-    SunRay = "#EDB458"
-    Celadon = "#BAD4AA";
+	// Normal
+	GlossyGrape = "#A799B7";
+	GlassyGrape = "#9888A5";
+	OldLavender = "#776472";
+	FeldGrau = "#445552";
+	DarkSlateGray = "#294D4A";
+	DimSkyBlue = "#83B5D1";
+	Rythm = "#726E97";
+	SunGlow = "#FFD23F";
+	CaribeanGreen = "#3BCEAC";
+	GoGreen = "#0EAD69";
+	DavysGrey = "#595959";
+	Xanadu = "#808F85";
+	SunRay = "#EDB458"
+	Celadon = "#BAD4AA";
 
-    // Pink Family
-    ParadisePink = "#EE4266";
-    FieryRose = "#FB6376";
-    Melon = "#FCB1A6";
-    UnbleachedSilk = "#FFDCCC";
-    FloralWhite = "#FFF9EC"
+	// Pink Family
+	ParadisePink = "#EE4266";
+	FieryRose = "#FB6376";
+	Melon = "#FCB1A6";
+	UnbleachedSilk = "#FFDCCC";
+	FloralWhite = "#FFF9EC"
 // COLORS END
 
 // BACKGROUND START
 // cvs.fillStyle = Xanadu;
 // cvs.fillRect(0, 0, display.width, display.height);
 const background = new Sprite ({
-    name: "background-main",
-    position: {x: 0, y: 0},
-    size: {width: display.width, height: display.height + 35, useSelfSize: false},
-    imageSrc: '../assets/Chris Courses - Fighting Game/background.png',
-    scale: 1,
-    framesMax: 1
+	name: "background-main",
+	position: {x: 0, y: 0},
+	size: {width: display.width, height: display.height + 35, useSelfSize: false},
+	imageSrc: '../assets/Chris Courses - Fighting Game/background.png',
+	scale: 1,
+	framesMax: 1
 });
 
 const shop = new Sprite ({
-    name: "background-shop",
-    position: {x: 580, y: 80},
-    size: {width: 180, height: 200, useSelfSize: false},
-    imageSrc: '../assets/Chris Courses - Fighting Game/shop.png',
-    scale: 1.75,
-    framesMax: 6
+	name: "background-shop",
+	position: {x: 580, y: 80},
+	size: {width: 180, height: 200, useSelfSize: false},
+	imageSrc: '../assets/Chris Courses - Fighting Game/shop.png',
+	scale: 1.75,
+	framesMax: 6
 });
 
 
@@ -78,27 +78,27 @@ let gameOver = false;
 
 // INITIAL ENTITIES
 const player = new Fighter({
-    name: "player",
-    position: {x: 0, y: 80},
-    size: {width: 72, height: 120, useSelfSize: true}, 
-    imageSrc: '../assets/Chris Courses - Fighting Game/samuraiMack/Idle.png',
-    scale: 2,
-    framesMax: 8,
-    centeringOffset: {x: 80, y: 62},
-    hitpoints: playerHP,
-    velocity: {x: 0, y: speedY}
+	name: "player",
+	position: {x: 0, y: 80},
+	size: {width: 72, height: 120, useSelfSize: true}, 
+	imageSrc: '../assets/Chris Courses - Fighting Game/samuraiMack/Idle.png',
+	scale: 2,
+	framesMax: 8,
+	centeringOffset: {x: 80, y: 62},
+	hitpoints: playerHP,
+	velocity: {x: 0, y: speedY}
 });
 
 const enemy = new Fighter({
-    name: "enemy",
-    position: {x: 350, y: 60}, 
-    size: {width: 72, height: 120, useSelfSize: true}, 
-    imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
-    scale: 2.15,
-    framesMax: 4,
-    centeringOffset: {x: 88, y: 72},
-    hitpoints: enemyHP, 
-    velocity: {x: 0, y: speedY}
+	name: "enemy",
+	position: {x: 350, y: 60}, 
+	size: {width: 72, height: 120, useSelfSize: true}, 
+	imageSrc: '../assets/Chris Courses - Fighting Game/kenji/idle.png',
+	scale: 2.15,
+	framesMax: 4,
+	centeringOffset: {x: 88, y: 72},
+	hitpoints: enemyHP, 
+	velocity: {x: 0, y: speedY}
 });
 
 
@@ -116,59 +116,62 @@ enemyHealthIndicator.innerHTML = enemy.hp;
 timer.innerHTML = time;
 
 function decreaseTimer() {
-    setTimeout(decreaseTimer, 1000);
-    timer.innerHTML = time;
-    if (time >= 0) {
-        --time;
-    }
+	setTimeout(decreaseTimer, 1000);
+	timer.innerHTML = time;
+	if (time >= 0) {
+		--time;
+	}
 
-    if (time < 0) {
-        timer.innerHTML = 0;
-        gameOver = true;
-    }
+	if (time < 0) {
+		timer.innerHTML = 0;
+		gameOver = true;
+	}
 }
 
 function displayerGameState() {
-    overlay.classList.remove("hidden");
-    if (player.hp == enemy.hp) {
-        gameStat.innerHTML = "TIE";
-    } else if (player.hp > enemy.hp) {
-        gameStat.innerHTML = "Player win";
-    } else if (player.hp < enemy.hp) {
-        gameStat.innerHTML = "Enemy win";
-    }
+	overlay.classList.remove("hidden");
+	if (player.hp == enemy.hp) {
+		gameStat.innerHTML = "TIE";
+	} else if (player.hp > enemy.hp) {
+		gameStat.innerHTML = "Player win";
+	} else if (player.hp < enemy.hp) {
+		gameStat.innerHTML = "Enemy win";
+	}
 }
 
 function updateStat(obj, index) {
-    let x = Math.round(obj.position.x);
-    let y = Math.round(obj.position.y);
+	let x = Math.round(obj.position.x);
+	let y = Math.round(obj.position.y);
 
-    dataState[index].innerHTML = `${obj.name} : ${obj.hp}HP`;
-    // dataLocation[index].innerHTML = `(${x}-${y}) >>> (${x + obj.width})-${y + obj.height})`
-    dataLocation[index].innerHTML = `(${x}) - (${x + obj.width})`
+	dataState[index].innerHTML = `${obj.name} : ${obj.hp}HP`;
+	// dataLocation[index].innerHTML = `(${x}-${y}) >>> (${x + obj.width})-${y + obj.height})`
+	dataLocation[index].innerHTML = `(${x}) - (${x + obj.width})`
 
-    let playerHealth = Math.round((player.hp/playerHP) * 100);
-    if (playerHealth <= 0) {
-        playerHealth = 0;
-    }
-    playerHealthIndicator.style.width = `${playerHealth}%`;
-    playerHealthIndicator.innerHTML = `${playerHealth}%`;
+	let playerHealth = Math.round((player.hp/playerHP) * 100);
+	if (playerHealth <= 0) {
+		playerHealth = 0;
+	}
+	playerHealthIndicator.style.width = `${playerHealth}%`;
+	playerHealthIndicator.innerHTML = `${playerHealth}%`;
 
-    let enemyHealth = Math.round((enemy.hp/enemyHP) * 100);
+	let enemyHealth = Math.round((enemy.hp/enemyHP) * 100);
 
-    if (enemyHealth <= 0) {
-        enemyHealth = 0;
-    }
-    enemyHealthIndicator.style.width = `${enemyHealth}%`;
-    enemyHealthIndicator.innerHTML = `${enemyHealth}%`;
+	if (enemyHealth <= 0) {
+		enemyHealth = 0;
+	}
+	enemyHealthIndicator.style.width = `${enemyHealth}%`;
+	enemyHealthIndicator.innerHTML = `${enemyHealth}%`;
 }
 
 function execute() {
-    updateStat(player, 0);    
-    updateStat(player.attack, 1);
-    updateStat(enemy, 2);    
-    updateStat(enemy.attack, 3);
-    animate();
+	// Render người chơi
+	updateStat(player, 0);
+	updateStat(player.attack, 1);
+
+	// Render AI
+	updateStat(enemy, 2);
+	updateStat(enemy.attack, 3);
+	animate();
 }
 
 decreaseTimer();
